@@ -34,10 +34,10 @@ import java.util.List;
 
 public class SimpleGeneratorMetaTileEntity extends TieredMetaTileEntity {
 
-    private final FuelRecipeLogic workableHandler;
-    private final ItemStackHandler containerInventory;
-    private final OrientedOverlayRenderer overlayRenderer;
-    private final FuelRecipeMap recipeMap;
+    private  FuelRecipeLogic workableHandler;
+    private  ItemStackHandler containerInventory;
+    private  OrientedOverlayRenderer overlayRenderer;
+    private  FuelRecipeMap recipeMap;
 
     public SimpleGeneratorMetaTileEntity(ResourceLocation metaTileEntityId, FuelRecipeMap recipeMap, OrientedOverlayRenderer renderer, int tier) {
         super(metaTileEntityId, tier);
