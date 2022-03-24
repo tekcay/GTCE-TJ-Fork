@@ -120,7 +120,7 @@ public class ConfigHolder {
 
     @Config.Comment("Whether to add solar panels from MV-UV")
     @Config.RequiresMcRestart
-    public static boolean enableHighTierSolar = true;
+    public static boolean enableHighTierSolar = false;
 
     @Config.Comment("Whether to add the max solar panel(Creative item)")
     @Config.RequiresMcRestart
