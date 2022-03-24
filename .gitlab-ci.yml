@@ -21,29 +21,4 @@ build:
       - build/libs/*.jar
     expire_in: 1 month
 
-production:
-  stage: deploy
-  script: ./gradlew curseforge postDiscordNotification
-  retry: 2
-  when: on_success
-  artifacts:
-    paths:
-      - build/libs/*.jar
-  only:
-    refs:
-      - tags
 
-manual_production:
-  stage: manual_deploy
-  script: ./gradlew curseforge postDiscordNotification
-  retry: 2
-  when: manual
-  artifacts:
-    paths:
-      - build/libs/*.jar
-  only:
-    refs:
-      - master
-  except:
-    refs:
-      - tags

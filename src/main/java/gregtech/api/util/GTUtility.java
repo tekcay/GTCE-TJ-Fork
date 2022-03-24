@@ -63,6 +63,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static gregtech.api.GTValues.V;
+import static gregtech.api.GTValues.V2;
 
 public class GTUtility {
 
@@ -394,6 +395,19 @@ public class GTUtility {
             }
         }
         return (byte) Math.min(V.length -1, tier);
+    }
+
+
+    public static byte getGATierByVoltage(long voltage) {
+        byte tier = 0;
+        while (++tier < V2.length) {
+            if (voltage == V2[tier]) {
+                return tier;
+            } else if (voltage < V2[tier]) {
+                return (byte) Math.max(0, tier - 1);
+            }
+        }
+        return (byte) Math.min(V2.length -1, tier);
     }
 
     public static BiomeDictionary.Type getBiomeTypeTagByName(String name) {

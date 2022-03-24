@@ -31,6 +31,7 @@ public class GTRecipeWrapper implements IRecipeWrapper {
     private final Map<ItemStack, ChanceEntry> chanceOutput = new Object2ObjectOpenCustomHashMap<>(strategy);
     private final List<FluidStack> notConsumedFluidInput = new ArrayList<>();
 
+
     private final Recipe recipe;
 
     public GTRecipeWrapper(Recipe recipe) {

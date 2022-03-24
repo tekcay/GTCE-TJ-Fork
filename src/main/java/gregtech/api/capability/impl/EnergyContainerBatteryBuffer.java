@@ -115,14 +115,14 @@ public class EnergyContainerBatteryBuffer extends MTETrait implements IEnergyCon
 
     @Override
     public long getEnergyCapacity() {
-        long energyCapacity = 0L;
-        IItemHandlerModifiable inventory = getInventory();
-        for (int i = 0; i < inventory.getSlots(); i++) {
-            ItemStack batteryStack = inventory.getStackInSlot(i);
-            IElectricItem electricItem = getBatteryContainer(batteryStack);
-            if (electricItem == null) continue;
-            energyCapacity += electricItem.getMaxCharge();
-        }
+            long energyCapacity = 0L;
+            IItemHandlerModifiable inventory = getInventory();
+            for (int i = 0; i < inventory.getSlots(); i++) {
+                ItemStack batteryStack = inventory.getStackInSlot(i);
+                IElectricItem electricItem = getBatteryContainer(batteryStack);
+                if (electricItem == null) continue;
+                energyCapacity += electricItem.getMaxCharge();
+            }
         return energyCapacity;
     }
 

@@ -14,6 +14,7 @@ import gregtech.api.unification.material.MarkerMaterials.Color;
 import gregtech.api.unification.material.MarkerMaterials.Tier;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.material.type.IngotMaterial;
+import gregtech.api.unification.material.type.Material;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.unification.stack.MaterialStack;
 import gregtech.api.unification.stack.UnificationEntry;
@@ -54,6 +55,10 @@ import java.util.List;
 
 import static gregtech.api.GTValues.L;
 import static gregtech.api.GTValues.M;
+import static gregtech.api.recipes.RecipeMaps.ASSEMBLER_RECIPES;
+import static gregtech.api.unification.material.Materials.*;
+import static gregtech.api.unification.ore.OrePrefix.*;
+import static gregtech.api.unification.ore.OrePrefix.plate;
 import static gregtech.api.util.DyeUtil.getOrdictColorName;
 import static gregtech.common.items.MetaItems.*;
 
@@ -538,6 +543,7 @@ public class MachineRecipeLoader {
         RecipeMaps.COMPRESSOR_RECIPES.recipeBuilder().inputs(MetaItems.INGOT_MIXED_METAL.getStackForm()).outputs(MetaItems.ADVANCED_ALLOY_PLATE.getStackForm()).buildAndRegister();
         RecipeMaps.IMPLOSION_RECIPES.recipeBuilder().inputs(MetaItems.INGOT_IRIDIUM_ALLOY.getStackForm()).outputs(MetaItems.PLATE_IRIDIUM_ALLOY.getStackForm()).explosivesAmount(8).buildAndRegister();
         RecipeMaps.COMPRESSOR_RECIPES.recipeBuilder().inputs(MetaItems.CARBON_MESH.getStackForm()).outputs(MetaItems.CARBON_PLATE.getStackForm()).buildAndRegister();
+        RecipeMaps.COMPRESSOR_RECIPES.recipeBuilder().duration(200).EUt(16).inputs(RUBBER_DROP.getStackForm(4)).outputs(OreDictUnifier.get(plate, Rubber,1)).buildAndRegister();
     }
 
     private static void registerAssemblerRecipes() {
@@ -561,6 +567,7 @@ public class MachineRecipeLoader {
                 .buildAndRegister();
         }
 
+
         RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
             .duration(4096).EUt(4096)
             .inputs(MetaItems.ENERGY_LAPOTRONIC_ORB2.getStackForm(8))
@@ -575,12 +582,61 @@ public class MachineRecipeLoader {
             .EUt(16).duration(200)
             .buildAndRegister();
 
-        RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
-            .input(OrePrefix.plate, Materials.Aluminium, 2)
-            .input(OrePrefix.dust, Materials.Redstone)
-            .outputs(MetaItems.COVER_MACHINE_CONTROLLER.getStackForm(1))
-            .EUt(16).duration(200)
-            .buildAndRegister();
+        //new covers
+        Material material = Materials.Iron;
+
+        for (FluidStack solder : new FluidStack[]{Tin.getFluid(L), SolderingAlloy.getFluid(L / 2)}) {
+            RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
+                    .inputs(new ItemStack(Blocks.LEVER))
+                    .input(OrePrefix.plate, material)
+                    .fluidInputs(solder)
+                    .outputs(MetaItems.COVER_MACHINE_CONTROLLER.getStackForm(1))
+                    .EUt(16).duration(200)
+                    .buildAndRegister();
+
+            ASSEMBLER_RECIPES.recipeBuilder()
+                    .input(cableGtSingle, Copper, 4)
+                    .input(circuit, MarkerMaterials.Tier.Basic)
+                    .input(plate, material)
+                    .fluidInputs(solder)
+                    .outputs(COVER_ENERGY_DETECTOR.getStackForm())
+                    .EUt(16).duration(400)
+                    .buildAndRegister();
+
+            ASSEMBLER_RECIPES.recipeBuilder()
+                    .inputs(new ItemStack(Blocks.REDSTONE_TORCH))
+                    .input(plate, material)
+                    .fluidInputs(solder)
+                    .outputs(COVER_ACTIVITY_DETECTOR.getStackForm())
+                    .EUt(16).duration(400)
+                    .buildAndRegister();
+
+            ASSEMBLER_RECIPES.recipeBuilder()
+                    .input(wireFine, Gold, 4)
+                    .input(circuit, MarkerMaterials.Tier.Advanced)
+                    .input(plate, Aluminium)
+                    .fluidInputs(solder)
+                    .outputs(COVER_ACTIVITY_DETECTOR_ADVANCED.getStackForm())
+                    .EUt(16).duration(400)
+                    .buildAndRegister();
+
+            ASSEMBLER_RECIPES.recipeBuilder()
+                    .inputs(new ItemStack(Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE))
+                    .input(plate, material)
+                    .fluidInputs(solder)
+                    .outputs(COVER_FLUID_DETECTOR.getStackForm())
+                    .EUt(16).duration(400)
+                    .buildAndRegister();
+
+            ASSEMBLER_RECIPES.recipeBuilder()
+                    .inputs(new ItemStack(Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE))
+                    .input(plate, material)
+                    .fluidInputs(solder)
+                    .outputs(COVER_ITEM_DETECTOR.getStackForm())
+                    .EUt(16).duration(400)
+                    .buildAndRegister();
+        }
+
 
         RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder().duration(480).EUt(240).input(OrePrefix.dust, Materials.Graphite, 8).input(OrePrefix.foil, Materials.Silicon, 1).fluidInputs(Materials.Glue.getFluid(250)).outputs(OreDictUnifier.get(OrePrefix.dustSmall, Materials.Graphene, 1)).buildAndRegister();
 
@@ -687,6 +743,9 @@ public class MachineRecipeLoader {
         RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder().EUt(4).input(OrePrefix.dust, Materials.Redstone, 1).input(OrePrefix.plate, Materials.Gold, 4).outputs(new ItemStack(Items.CLOCK, 1)).duration(400).buildAndRegister();
         RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder().EUt(1).input(OrePrefix.stick, Materials.Wood, 1).input(OrePrefix.dust, Materials.Sulfur, 1).outputs(new ItemStack(Blocks.TORCH, 2)).duration(400).buildAndRegister();
         RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder().EUt(1).input(OrePrefix.stick, Materials.Wood, 1).input(OrePrefix.dust, Materials.Phosphorus, 1).outputs(new ItemStack(Blocks.TORCH, 6)).duration(400).buildAndRegister();
+
+
+
     }
 
     private static void registerBlastFurnaceRecipes() {
@@ -1074,5 +1133,16 @@ public class MachineRecipeLoader {
 
         for (MetaTileEntityQuantumTank tank : MetaTileEntities.QUANTUM_TANK)
             ModHandler.addShapelessRecipe("quantum_tank_nbt_" + tank.getTier(), tank.getStackForm(), tank.getStackForm());
+        ModHandler.addShapelessRecipe("super_chest_nbt_" + MetaTileEntities.super_chest[0].getMetaName(), MetaTileEntities.super_chest[0].getStackForm(), MetaTileEntities.super_chest[0].getStackForm());
+        ModHandler.addShapelessRecipe("super_chest_nbt_" + MetaTileEntities.super_chest[1].getMetaName(), MetaTileEntities.super_chest[1].getStackForm(), MetaTileEntities.super_chest[1].getStackForm());
+        ModHandler.addShapelessRecipe("super_chest_nbt_" + MetaTileEntities.super_chest[2].getMetaName(), MetaTileEntities.super_chest[2].getStackForm(), MetaTileEntities.super_chest[2].getStackForm());
+        ModHandler.addShapelessRecipe("super_chest_nbt_" + MetaTileEntities.super_chest[3].getMetaName(), MetaTileEntities.super_chest[3].getStackForm(), MetaTileEntities.super_chest[3].getStackForm());
+
+        ModHandler.addShapelessRecipe("super_tank_nbt_" + MetaTileEntities.Super_tank[1].getMetaName(), MetaTileEntities.Super_tank[1].getStackForm(), MetaTileEntities.Super_tank[1].getStackForm());
+        ModHandler.addShapelessRecipe("super_tank_nbt_" + MetaTileEntities.Super_tank[2].getMetaName(), MetaTileEntities.Super_tank[2].getStackForm(), MetaTileEntities.Super_tank[2].getStackForm());
+        ModHandler.addShapelessRecipe("super_tank_nbt_" + MetaTileEntities.Super_tank[3].getMetaName(), MetaTileEntities.Super_tank[3].getStackForm(), MetaTileEntities.Super_tank[3].getStackForm());
+        ModHandler.addShapelessRecipe("super_tank_nbt_" + MetaTileEntities.Super_tank[4].getMetaName(), MetaTileEntities.Super_tank[4].getStackForm(), MetaTileEntities.Super_tank[4].getStackForm());
+
     }
+
 }

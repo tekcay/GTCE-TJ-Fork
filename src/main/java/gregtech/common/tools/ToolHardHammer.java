@@ -86,5 +86,6 @@ public class ToolHardHammer extends ToolBase {
     @Override
     public void addInformation(ItemStack stack, List<String> lines, boolean isAdvanced) {
         lines.add(I18n.format("metaitem.tool.tooltip.hammer.extra_drop"));
+        lines.add(I18n.format("metaitem.tool.tooltip.hammer.structure.check"));
     }
 }

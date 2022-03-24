@@ -229,7 +229,7 @@ public class FuelRecipeLogic extends MTETrait implements IControllable, IFuelabl
     }
 
     public static long getTieredVoltage(long voltage) {
-        return GTValues.V[GTUtility.getTierByVoltage(voltage)];
+        return GTValues.V2[GTUtility.getGATierByVoltage(voltage)];
     }
 
     protected void setActive(boolean active) {

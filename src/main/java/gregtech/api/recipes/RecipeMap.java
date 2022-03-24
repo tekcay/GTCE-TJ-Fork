@@ -16,6 +16,7 @@ import gregtech.api.gui.widgets.ProgressWidget;
 import gregtech.api.gui.widgets.ProgressWidget.MoveType;
 import gregtech.api.gui.widgets.SlotWidget;
 import gregtech.api.gui.widgets.TankWidget;
+import gregtech.api.metatileentity.TickableTileEntityBase;
 import gregtech.api.recipes.builders.IntCircuitRecipeBuilder;
 import gregtech.api.recipes.crafttweaker.CTRecipe;
 import gregtech.api.recipes.crafttweaker.CTRecipeBuilder;
@@ -46,6 +47,7 @@ import java.util.stream.Collectors;
 public class RecipeMap<R extends RecipeBuilder<R>> {
 
     private static final List<RecipeMap<?>> RECIPE_MAPS = new ArrayList<>();
+    private boolean JustRan;
     @ZenProperty
     public static IChanceFunction chanceFunction = (chance, boostPerTier, tier) -> chance + (boostPerTier * tier);
 
@@ -60,6 +62,29 @@ public class RecipeMap<R extends RecipeBuilder<R>> {
     protected TextureArea progressBarTexture;
     protected MoveType moveType;
     public final boolean isHidden;
+
+
+    private long timer = 0L;
+
+    // Create an offset [0,20) to distribute ticks more evenly
+    private final int offset = GTUtility.getRandomIntXSTR(20);
+
+    /**
+     * @deprecated This method distributes ticks unevenly.
+     * Use {@link TickableTileEntityBase#getOffsetTimer()} instead.
+     */
+    @Deprecated
+    public long getTimer() {
+        return timer;
+    }
+
+    /**
+     * Replacement for old {@link TickableTileEntityBase#getTimer()}.
+     * @return Timer value with a random offset of [0,20].
+     */
+    public long getOffsetTimer() {
+        return timer + offset;
+    }
 
     private final Map<FluidKey, Collection<Recipe>> recipeFluidMap = new HashMap<>();
     private final Collection<Recipe> recipeList = new ArrayList<>();
@@ -239,6 +264,7 @@ public class RecipeMap<R extends RecipeBuilder<R>> {
      */
     @Nullable
     public Recipe findRecipe(long voltage, List<ItemStack> inputs, List<FluidStack> fluidInputs, int outputFluidTankCapacity, MatchingMode matchingMode) {
+
         if (recipeList.isEmpty())
             return null;
         if (minFluidInputs > 0 && GTUtility.amountOfNonNullElements(fluidInputs) < minFluidInputs) {

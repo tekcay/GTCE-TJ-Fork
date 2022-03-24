@@ -162,7 +162,9 @@ public class MetaTileEntities {
     public static MetaTileEntityItemCollector[] ITEM_COLLECTOR = new MetaTileEntityItemCollector[4];
     public static MetaTileEntityTeslaCoil TESLA_COIL;
     public static MetaTileEntityQuantumChest[] QUANTUM_CHEST = new MetaTileEntityQuantumChest[4];
+    public static MetaTileEntityQuantumChest[] super_chest = new MetaTileEntityQuantumChest[4];
     public static MetaTileEntityQuantumTank[] QUANTUM_TANK = new MetaTileEntityQuantumTank[4];
+    public static MetaTileEntityQuantumTank[] Super_tank = new MetaTileEntityQuantumTank[5];
     public static MetaTileEntityFisher[] FISHER = new MetaTileEntityFisher[4];
 
     public static void init() {
@@ -472,9 +474,9 @@ public class MetaTileEntities {
             GregTechAPI.registerMetaTileEntity(700 + 10 * i + 5, ENERGY_OUTPUT_HATCH[i]);
         }
 
-        ROTOR_HOLDER[0] = GregTechAPI.registerMetaTileEntity(817, new MetaTileEntityRotorHolder(gregtechId("rotor_holder.hv"), GTValues.HV, 1.0f));
-        ROTOR_HOLDER[1] = GregTechAPI.registerMetaTileEntity(818, new MetaTileEntityRotorHolder(gregtechId("rotor_holder.luv"), GTValues.LuV, 1.15f));
-        ROTOR_HOLDER[2] = GregTechAPI.registerMetaTileEntity(819, new MetaTileEntityRotorHolder(gregtechId("rotor_holder.max"), GTValues.MAX, 1.25f));
+        ROTOR_HOLDER[0] = GregTechAPI.registerMetaTileEntity(817, new MetaTileEntityRotorHolder(gregtechId("rotor_holder.hv"), GTValues.HV, 1.1f));
+        ROTOR_HOLDER[1] = GregTechAPI.registerMetaTileEntity(818, new MetaTileEntityRotorHolder(gregtechId("rotor_holder.luv"), GTValues.LuV, 1.35f));
+        ROTOR_HOLDER[2] = GregTechAPI.registerMetaTileEntity(819, new MetaTileEntityRotorHolder(gregtechId("rotor_holder.max"), GTValues.MAX, 1.7f));
 
         SMALL_WOODEN_CHEST = GregTechAPI.registerMetaTileEntity(808, new MetaTileEntityChest(gregtechId("small_wooden_chest"), Materials.Wood, 1, 1));
         WOODEN_CHEST = GregTechAPI.registerMetaTileEntity(807, new MetaTileEntityChest(gregtechId("wooden_chest"), Materials.Wood, 9, 3));
@@ -499,6 +501,29 @@ public class MetaTileEntities {
         LOCKED_SAFE = GregTechAPI.registerMetaTileEntity(824, new MetaTileEntityLockedSafe(gregtechId("locked_safe")));
         WORKBENCH = GregTechAPI.registerMetaTileEntity(825, new MetaTileEntityWorkbench(gregtechId("workbench")));
         ARMOR_TABLE = GregTechAPI.registerMetaTileEntity(826, new MetaTileEntityArmorTable(gregtechId("armor_table")));
+
+        super_chest[0] = new MetaTileEntityQuantumChest(gregtechId("quantum_chest" + GTValues.VN[1].toLowerCase()),1,2048000);
+        super_chest[1] = new MetaTileEntityQuantumChest(gregtechId("quantum_chest" + GTValues.VN[6].toLowerCase()),6,32768000);
+        super_chest[2] = new MetaTileEntityQuantumChest(gregtechId("quantum_chest" + GTValues.VN[7].toLowerCase()),7,65536000);
+        super_chest[3] = new MetaTileEntityQuantumChest(gregtechId("quantum_chest" + GTValues.VN[8].toLowerCase()),8,Integer.MAX_VALUE);
+        //Super_tank[0] = new MetaTileEntityQuantumTank(gregtechId("quantum_tank" + GTValues.VN[0].toLowerCase()),0,40000000);
+        Super_tank[1] = new MetaTileEntityQuantumTank(gregtechId("quantum_tank" + GTValues.VN[1].toLowerCase()),1,32000000);
+        Super_tank[2] = new MetaTileEntityQuantumTank(gregtechId("quantum_tank" + GTValues.VN[6].toLowerCase()),6,512000000);
+        Super_tank[3] = new MetaTileEntityQuantumTank(gregtechId("quantum_tank" + GTValues.VN[7].toLowerCase()),7,1024000000);
+        Super_tank[4] = new MetaTileEntityQuantumTank(gregtechId("quantum_tank" + GTValues.VN[8].toLowerCase()),8,Integer.MAX_VALUE);
+        GregTechAPI.registerMetaTileEntity(827, super_chest[0]);
+        //GregTechAPI.registerMetaTileEntity(828, Super_tank[0]);
+        GregTechAPI.registerMetaTileEntity(829, Super_tank[1]);
+        GregTechAPI.registerMetaTileEntity(830, super_chest[1]);
+        GregTechAPI.registerMetaTileEntity(831, super_chest[2]);
+        GregTechAPI.registerMetaTileEntity(832, super_chest[3]);
+        GregTechAPI.registerMetaTileEntity(833, Super_tank[2]);
+        GregTechAPI.registerMetaTileEntity(834, Super_tank[3]);
+        GregTechAPI.registerMetaTileEntity(835, Super_tank[4]);
+
+
+
+
 
         for (int i = 1; i < 5; i++) {
             String voltageName = GTValues.VN[i].toLowerCase();

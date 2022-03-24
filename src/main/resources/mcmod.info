@@ -7,8 +7,8 @@
   "logoFile": "/assets/gregtech/textures/gt_logo_long.png",
   "url": "https://minecraft.curseforge.com/projects/gregtechce",
   "authorList": [
-      "Archengius",
-      "Exidex"
+    "Archengius",
+    "Exidex"
   ],
   "credits": "GregoriusT for making GregTech and textures, various GT community members for help in development.",
   "dependencies": ["codechickenlib"]

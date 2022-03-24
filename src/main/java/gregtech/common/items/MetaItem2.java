@@ -174,6 +174,32 @@ public class MetaItem2 extends MaterialMetaItem {
         FLUID_REGULATORS[5] = FLUID_REGULATOR_LUV = addItem(705, "fluid.regulator.luv");
         FLUID_REGULATORS[6] = FLUID_REGULATOR_ZPM = addItem(706, "fluid.regulator.zpm");
         FLUID_REGULATORS[7] = FLUID_REGULATOR_UV = addItem(707, "fluid.regulator.uv");
+
+        //new solar pannels
+        COVER_SOLAR_PANEL_MV = addItem(708, "cover.solar.panel.mv");
+        COVER_SOLAR_PANEL_HV = addItem(709, "cover.solar.panel.hv");
+        COVER_SOLAR_PANEL_EV = addItem(710, "cover.solar.panel.ev");
+        COVER_SOLAR_PANEL_IV = addItem(711, "cover.solar.panel.iv");
+        COVER_SOLAR_PANEL_LuV = addItem(712, "cover.solar.panel.luv");
+        COVER_SOLAR_PANEL_ZPM = addItem(713, "cover.solar.panel.zpm");
+        COVER_SOLAR_PANEL_UV = addItem(714, "cover.solar.panel.uv");
+        COVER_SOLAR_PANEL_MAX = addItem(715, "cover.solar.panel.max");
+        COVER_ACTIVITY_DETECTOR_ADVANCED = addItem(716, "cover.activity.detector.advanced");
+
+        if(!ConfigHolder.enableHighTierSolar){
+            COVER_SOLAR_PANEL_MV.setInvisible();
+            COVER_SOLAR_PANEL_HV.setInvisible();
+            COVER_SOLAR_PANEL_EV.setInvisible();
+            COVER_SOLAR_PANEL_IV.setInvisible();
+            COVER_SOLAR_PANEL_LuV.setInvisible();
+            COVER_SOLAR_PANEL_ZPM.setInvisible();
+            COVER_SOLAR_PANEL_UV.setInvisible();
+        }
+        if(!ConfigHolder.enableSupraSolar){
+            COVER_SOLAR_PANEL_MAX.setInvisible();
+        }
+
+
     }
 
     public void registerRecipes() {

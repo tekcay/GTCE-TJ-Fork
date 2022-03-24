@@ -58,7 +58,7 @@ public class ToolUtility {
                 int fortuneLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, itemStack);
                 List<ItemStack> drops = target.onSheared(itemStack, player.world, pos, fortuneLevel);
                 dropListOfItems(player.world, pos, drops);
-                         player.world.setBlockState(pos, Blocks.AIR.getDefaultState(), 11);
+                player.world.setBlockState(pos, Blocks.AIR.getDefaultState(), 11);
                 return true;
             }
         }
@@ -102,12 +102,13 @@ public class ToolUtility {
             for (ItemStack outputStack : recipe.getResultItemOutputs(Integer.MAX_VALUE, random, 0)) {
                 outputStack = outputStack.copy();
                 if (!(player instanceof FakePlayer) && OreDictUnifier.getPrefix(outputStack) == OrePrefix.crushed) {
-                    int growAmount = Math.round(outputStack.getCount() * random.nextFloat());
                     if (fortuneLevel > 0) {
-                        int i = Math.max(0, random.nextInt(fortuneLevel + 2) - 1);
-                        growAmount += outputStack.getCount() * i;
+                        if (fortuneLevel > 3) fortuneLevel = 3;
+                        int i = (random.nextFloat() <= (fortuneLevel / 3.0) ? 2 : 1);
+                        outputStack.setCount(outputStack.getCount() * i);
+                        if (outputStack.getCount() == 0) outputStack.setCount(1);
                     }
-                    outputStack.grow(growAmount);
+
                 }
                 drops.add(outputStack);
             }

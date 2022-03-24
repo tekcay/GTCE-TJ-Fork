@@ -270,10 +270,10 @@ public class MetaItem1 extends MaterialMetaItem {
 
         COVER_MACHINE_CONTROLLER = addItem(730, "cover.controller");
 
-        COVER_ACTIVITY_DETECTOR = addItem(731, "cover.activity.detector").setInvisible();
-        COVER_FLUID_DETECTOR = addItem(732, "cover.fluid.detector").setInvisible();
-        COVER_ITEM_DETECTOR = addItem(733, "cover.item.detector").setInvisible();
-        COVER_ENERGY_DETECTOR = addItem(734, "cover.energy.detector").setInvisible();
+        COVER_ACTIVITY_DETECTOR = addItem(731, "cover.activity.detector");
+        COVER_FLUID_DETECTOR = addItem(732, "cover.fluid.detector");
+        COVER_ITEM_DETECTOR = addItem(733, "cover.item.detector");
+        COVER_ENERGY_DETECTOR = addItem(734, "cover.energy.detector");
 
         COVER_SCREEN = addItem(740, "cover.screen").setInvisible();
         COVER_CRAFTING = addItem(744, "cover.crafting").setInvisible();
@@ -288,6 +288,8 @@ public class MetaItem1 extends MaterialMetaItem {
         FLUID_CELL = addItem(762, "fluid_cell").addComponents(new FluidStats(1000, Integer.MIN_VALUE, Integer.MAX_VALUE, false));
         INTEGRATED_CIRCUIT = addItem(766, "circuit.integrated").addComponents(new IntCircuitBehaviour());
         FOAM_SPRAYER = addItem(746, "foam_sprayer").addComponents(new FoamSprayerBehavior());
+
+
     }
 
     public void registerRecipes() {

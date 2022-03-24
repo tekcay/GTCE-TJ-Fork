@@ -102,12 +102,12 @@ public class MetaTileEntityLargeTurbine extends RotorHolderMultiblockController 
 
     @Override
     public int getRotorSpeedIncrement() {
-        return 1;
+        return 3;
     }
 
     @Override
     public int getRotorSpeedDecrement() {
-        return -3;
+        return -1;
     }
 
     @Override
@@ -161,7 +161,11 @@ public class MetaTileEntityLargeTurbine extends RotorHolderMultiblockController 
                 new MultiblockAbility[]{MultiblockAbility.IMPORT_FLUIDS, MultiblockAbility.EXPORT_FLUIDS} :
                 new MultiblockAbility[]{MultiblockAbility.IMPORT_FLUIDS};
     }
+    @Override
+    public boolean canShare(){
+        return false;
 
+    }
     public IBlockState getCasingState() {
         return turbineType.casingState;
     }

@@ -40,6 +40,8 @@ public class GTValues {
      * The Voltage Tiers. Use this Array instead of the old named Voltage Variables
      */
     public static final long[] V = new long[]{8, 32, 128, 512, 2048, 8192, 32768, 131072, 524288, Integer.MAX_VALUE};
+    public static final long[] V2 = new long[]{8, 32, 128, 512, 2048, 8192, 32768, 131072, 524288, 2097152, 8388608, 33554432, 134217728, 536870912, Integer.MAX_VALUE};
+
 
     public static final int ULV = 0;
     public static final int LV = 1;
@@ -52,11 +54,9 @@ public class GTValues {
     public static final int UV = 8;
     public static final int MAX = 9;
 
-    /**
-     * The short names for the voltages
-     */
-    public static final String[] VN = new String[] {"ULV", "LV", "MV", "HV", "EV", "IV", "LuV", "ZPM", "UV", "MAX"};
 
+    public static final String[] VN = new String[] {"ULV", "LV", "MV", "HV", "EV", "IV", "LuV", "ZPM", "UV", "MAX"};
+    public static final String[] VN2 = new String[] {"ULV", "LV", "MV", "HV", "EV", "IV", "LuV", "ZPM", "UV", "UHV", "UEV", "UIV", "UMV", "UXV", "MAX"};
     /**
      * Color values for the voltages
      */

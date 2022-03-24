@@ -20,6 +20,7 @@ public class CoverSolarPanel extends CoverBehavior implements ITickable {
 
     private final int EUt;
 
+
     public CoverSolarPanel(ICoverable coverHolder, EnumFacing attachedSide, int EUt) {
         super(coverHolder, attachedSide);
         this.EUt = EUt;
@@ -32,7 +33,12 @@ public class CoverSolarPanel extends CoverBehavior implements ITickable {
 
     @Override
     public void renderCover(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline, Cuboid6 plateBox, BlockRenderLayer layer) {
-        Textures.SOLAR_PANEL.renderSided(attachedSide, plateBox, renderState, pipeline, translation);
+        if(EUt == Integer.MAX_VALUE){
+            Textures.SOLAR_PANEL_SUPRA.renderSided(attachedSide, plateBox, renderState, pipeline, translation);
+        }
+        else {
+            Textures.SOLAR_PANEL.renderSided(attachedSide, plateBox, renderState, pipeline, translation);
+        }
     }
 
     @Override
@@ -41,8 +47,8 @@ public class CoverSolarPanel extends CoverBehavior implements ITickable {
         BlockPos blockPos = coverHolder.getPos().up();
         if (canSeeSunClearly(world, blockPos)) {
             IEnergyContainer energyContainer = coverHolder.getCapability(GregtechCapabilities.CAPABILITY_ENERGY_CONTAINER, null);
-            if (energyContainer != null) {
-                energyContainer.addEnergy(EUt);
+            if(energyContainer != null) {
+                energyContainer.acceptEnergyFromNetwork(null, EUt, 1);
             }
         }
     }

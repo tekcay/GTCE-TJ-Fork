@@ -1,5 +1,6 @@
 package gregtech.api.metatileentity.multiblock;
 
+import codechicken.lib.raytracer.CuboidRayTraceResult;
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.ColourMultiplier;
 import codechicken.lib.render.pipeline.IVertexOperation;
@@ -14,17 +15,28 @@ import gregtech.api.render.ICubeRenderer;
 import gregtech.api.render.OrientedOverlayRenderer;
 import gregtech.api.render.Textures;
 import gregtech.api.util.GTUtility;
+import gregtech.common.ConfigHolder;
+import gregtech.common.items.MetaItems;
+import gregtech.common.metatileentities.electric.multiblockpart.MetaTileEntityRotorHolder;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Predicate;
@@ -40,17 +52,21 @@ public abstract class MultiblockControllerBase extends MetaTileEntity {
     public MultiblockControllerBase(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId);
         reinitializeStructurePattern();
+        this.setPaintingColor(0xFFFFFF);
     }
 
     protected void reinitializeStructurePattern() {
         this.structurePattern = createStructurePattern();
     }
 
+
     @Override
     public void update() {
         super.update();
         if (!getWorld().isRemote) {
-            if (getOffsetTimer() % 20 == 0 || getTimer() == 0) {
+
+                if (getOffsetTimer() % ConfigHolder.structureCheckOffSetTimer == 0 || getTimer() == 0) {
+
                 checkStructurePattern();
             }
             if (isStructureFormed()) {
@@ -77,6 +93,7 @@ public abstract class MultiblockControllerBase extends MetaTileEntity {
 
     /**
      * Override this method to change the Controller overlay
+     *
      * @return The overlay to render on the Multiblock Controller
      */
     @Nonnull
@@ -116,7 +133,7 @@ public abstract class MultiblockControllerBase extends MetaTileEntity {
 
     public static Predicate<BlockWorldState> abilityPartPredicate(MultiblockAbility<?>... allowedAbilities) {
         return tilePredicate((state, tile) -> tile instanceof IMultiblockAbilityPart<?> &&
-            ArrayUtils.contains(allowedAbilities, ((IMultiblockAbilityPart<?>) tile).getAbility()));
+                ArrayUtils.contains(allowedAbilities, ((IMultiblockAbilityPart<?>) tile).getAbility()));
     }
 
     public static Predicate<BlockWorldState> partPredicate(Class<? extends IMultiblockPart> baseClass) {
@@ -159,6 +176,17 @@ public abstract class MultiblockControllerBase extends MetaTileEntity {
         return Pair.of(getBaseTexture(null).getParticleSprite(), getPaintingColor());
     }
 
+    /**
+     * if true allows all hatches to share but energy hatches and rotor holders
+     * defualt true
+     *
+     * @return
+     */
+    public boolean canShare() {
+        return true;
+
+    }
+
     protected void checkStructurePattern() {
         EnumFacing facing = getFrontFacing().getOpposite();
         PatternMatchContext context = structurePattern.checkPatternAt(getWorld(), getPos(), facing);
@@ -168,10 +196,9 @@ public abstract class MultiblockControllerBase extends MetaTileEntity {
             parts.sort(Comparator.comparing(it -> ((MetaTileEntity) it).getPos().hashCode()));
             for (IMultiblockPart part : parts) {
                 if (part.isAttachedToMultiBlock()) {
-                    //disallow sharing of multiblock parts
-                    //if part is already attached to another multiblock,
-                    //stop here without attempting to register abilities
-                    return;
+                    if (!canShare() || part instanceof MetaTileEntityRotorHolder) {
+                        return;
+                    }
                 }
             }
             Map<MultiblockAbility<Object>, List<Object>> abilities = new HashMap<>();
@@ -216,7 +243,6 @@ public abstract class MultiblockControllerBase extends MetaTileEntity {
 
     @SuppressWarnings("unchecked")
     public <T> List<T> getAbilities(MultiblockAbility<T> ability) {
-        @SuppressWarnings("SuspiciousMethodCalls")
         List<T> rawList = (List<T>) multiblockAbilities.getOrDefault(ability, Collections.emptyList());
         return Collections.unmodifiableList(rawList);
     }
@@ -245,8 +271,29 @@ public abstract class MultiblockControllerBase extends MetaTileEntity {
         }
     }
 
+
+    @Override
+    public boolean onRightClick(EntityPlayer playerIn, EnumHand hand, EnumFacing facing, CuboidRayTraceResult hitResult) {
+
+            if(playerIn != null && playerIn.getHeldItemMainhand().isItemEqual(MetaItems.HARD_HAMMER.getStackForm())){
+        if(!getWorld().isRemote) {
+            this.checkStructurePattern();
+
+            if (structureFormed) {
+
+                updateFormedValid();
+            }
+
+            return false;
+        }
+        }
+
+        return super.onRightClick(playerIn, hand, facing, hitResult);
+    }
+
     public boolean isStructureFormed() {
         return structureFormed;
     }
+
 
 }

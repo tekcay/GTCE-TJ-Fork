@@ -72,7 +72,7 @@ version = "$mcVersion-$modVersion"
 group = "gregtech"
 
 configure<BasePluginConvention> {
-    archivesBaseName = "gregtech"
+    archivesBaseName = "GregTech_TJ_edition"
 }
 
 fun minecraft(configure: UserBaseExtension.() -> Unit) = project.configure(configure)
@@ -238,27 +238,6 @@ tasks.create("generateChangelog") {
     }
 }
 
-val curseforgeProject = configureCurseforgeTask()
-//just because curseforge task is retarded
-curseforgeProject?.uploadTask?.outputs?.upToDateWhen { false }
-
-fun resolveGitLabDownloadLink(): String? {
-    val gitlabJobId: String = System.getenv("CI_JOB_ID") ?: return null
-    return "https://gitlab.com/GregTechCE/GregTech/-/jobs/$gitlabJobId/artifacts/raw/build/libs/${jar.archiveName}"
-}
-
-fun resolveCurseforgeArtifactId(): String? {
-    if (curseforgeProject == null) {
-        return null
-    }
-    val artifact = curseforgeProject.additionalArtifacts.first()
-    return artifact.parentFileID?.toString()
-}
-
-fun resolveCurseForgeDownloadLink(): String? {
-    val cfArtifactId = resolveCurseforgeArtifactId() ?: return null
-    return "https://www.curseforge.com/minecraft/mc-mods/gregtechce/files/$cfArtifactId"
-}
 
 fun resolveVersionChangelog(): String {
     val changeLogLines = file("CHANGELOG.md").readLines(Charsets.UTF_8)
@@ -278,47 +257,11 @@ fun resolveVersionChangelog(): String {
     return changelogBuilder.toString()
 }
 
-val notificationTask: Task = tasks.create("postDiscordNotification") {
-    doLast {
-        val webhookId = System.getenv("DISCORD_WEBHOOK_ID") ?: error("Discord webhook id not set")
-        val webhookToken = System.getenv("DISCORD_WEBHOOK_TOKEN") ?: error("Discord webhook token not set")
-        val curseForgeDownloadLink = resolveCurseForgeDownloadLink()
-        val gitLabDownloadLink = resolveGitLabDownloadLink()
-        val message = StringBuilder("New GTCE version $modVersionNoBuild is out!\n")
-        if (gitLabDownloadLink != null) {
-            message.append("GitLab download:\n")
-            message.append(gitLabDownloadLink)
-            message.append("\n")
-        }
-        if (curseForgeDownloadLink != null) {
-            message.append("CurseForge download (may take a while to be approved):\n")
-            message.append(curseForgeDownloadLink)
-            message.append("\n")
-        }
-        message.append("```${resolveVersionChangelog()}```")
 
-        val jsonObject = JsonObject()
-        jsonObject.addProperty("content", message.toString())
-
-        val httpClient = HttpClientBuilder.create().build()
-        val webhookUrl = "https://discordapp.com/api/webhooks/$webhookId/$webhookToken"
-        val response = httpClient.execute(HttpPost(webhookUrl).also {
-            it.entity = StringEntity(jsonObject.toString(), ContentType.APPLICATION_JSON)
-        })
-        if (response.statusLine.statusCode !in 200..210) {
-            val status = response.statusLine
-            throw IllegalStateException("Failed to send discord notification - ${status.statusCode} - ${status.reasonPhrase}")
-        }
-    }
-}
-
-if (curseforgeProject != null) {
-    notificationTask.dependsOn("curseforge")
-}
 
 tasks["build"].dependsOn("generateChangelog")
 tasks["ciWriteBuildNumber"].dependsOn("generateChangelog")
-notificationTask.dependsOn("generateChangelog")
+//notificationTask.dependsOn("generateChangelog")
 
 fun getPrettyCommitDescription(commit: RevCommit): String {
     val closePattern = Regex("(Closes|Fixes) #[0-9]*\\.?")
@@ -411,63 +354,8 @@ fun getVersionFromJava(file: File): String  {
     return "$major.$minor.$revision.$build"
 }
 
-fun CurseExtension.project(config: CurseProject.() -> Unit) = CurseProject().also {
-    it.config()
-    curseProjects.add(it)
-}
 
 
-// has to be called after addArtifact ¯\_(ツ)_/¯
-fun CurseProject.relations(config: CurseRelation.() -> Unit) = CurseRelation().also {
 
-    it.config()
 
-    additionalArtifacts.forEach { artifact ->
-        artifact.curseRelations = it
-    }
 
-    mainArtifact.curseRelations = it
-}
-
-fun configureCurseforgeTask(): CurseProject? {
-    if (System.getenv("CURSE_API_KEY") != null) {
-        val extension = curseforge
-        extension.apiKey = System.getenv("CURSE_API_KEY")
-        return extension.project {
-            apiKey = System.getenv("CURSE_API_KEY")
-            id = "293327"
-            changelog = file("CHANGELOG.md")
-            changelogType = "markdown"
-            releaseType = "release"
-
-            mainArtifact(jar)
-            addArtifact(sourceTask)
-            addArtifact(energyApiTask)
-
-            relations {
-                requiredDependency("codechicken-lib-1-8")
-                optionalDependency("crafttweaker")
-                optionalDependency("jei")
-                optionalDependency("the-one-probe")
-                optionalDependency("ctm")
-            }
-        }
-    } else {
-        println("Skipping curseforge task as there is no api key in the environment")
-        return null
-    }
-}
-
-publishing {
-    publications {
-        create("GTCEPublication", MavenPublication::class.java) {
-            groupId = project.group as String
-            artifactId = the<BasePluginConvention>().archivesBaseName
-            version = project.version as String
-
-            artifact(jar)
-            artifact(sourceTask)
-            artifact(energyApiTask)
-        }
-    }
-}

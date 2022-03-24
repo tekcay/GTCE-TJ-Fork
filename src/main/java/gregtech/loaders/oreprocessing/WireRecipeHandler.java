@@ -1,7 +1,9 @@
 package gregtech.loaders.oreprocessing;
 
+import forestry.farming.logic.crops.CropRubber;
 import gregtech.api.GTValues;
 import gregtech.api.items.OreDictNames;
+import gregtech.api.items.metaitem.MetaItem;
 import gregtech.api.recipes.ModHandler;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.unification.OreDictUnifier;
@@ -18,6 +20,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import org.apache.commons.lang3.ArrayUtils;
+import scala.tools.cmd.Meta;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -89,14 +92,14 @@ public class WireRecipeHandler {
                 ingredients[0] = new UnificationEntry(wirePrefix, material);
                 ingredients[ingredients.length - 1] = OreDictNames.string;
                 for (int i = 1; i < ingredients.length - 1; i++) {
-                    ingredients[i] = new ItemStack(Blocks.CARPET, 1, EnumDyeColor.BLACK.getMetadata());
+                    ingredients[i] = (OreDictUnifier.get(OrePrefix.plate, Materials.Rubber, 1) );
                 }
                 ModHandler.addShapelessRecipe(String.format("%s_cable_%d", material, cableAmount), cableStack, ingredients);
             }
         }
 
         if (isPaperInsulatedCable(material)) {
-            ItemStack carpetStack = new ItemStack(Blocks.CARPET, cableAmount, EnumDyeColor.BLACK.getMetadata());
+            ItemStack carpetStack = (OreDictUnifier.get(OrePrefix.plate, Materials.Rubber, 1) );
             RecipeMaps.PACKER_RECIPES.recipeBuilder()
                 .input(wirePrefix, material)
                 .inputs(carpetStack)

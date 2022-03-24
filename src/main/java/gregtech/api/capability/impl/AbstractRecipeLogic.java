@@ -54,10 +54,20 @@ public abstract class AbstractRecipeLogic extends MTETrait implements IWorkable 
     protected boolean workingEnabled = true;
     protected boolean hasNotEnoughEnergy;
     protected boolean wasActiveAndNeedsUpdate;
+    private final long[] V;
+    private final String[] VN;
 
     public AbstractRecipeLogic(MetaTileEntity tileEntity, RecipeMap<?> recipeMap) {
         super(tileEntity);
         this.recipeMap = recipeMap;
+        if(ConfigHolder.gregicalityOverclocking){
+            V = GTValues.V2;
+            VN = GTValues.VN2;
+        }
+        else {
+            V =  GTValues.V;
+            VN = GTValues.VN;
+        }
     }
 
     protected abstract long getEnergyStored();
@@ -248,12 +258,13 @@ public abstract class AbstractRecipeLogic extends MTETrait implements IWorkable 
     }
 
     protected int[] calculateOverclock(int EUt, long voltage, int duration) {
+
         if (!allowOverclocking) {
             return new int[] {EUt, duration};
         }
         boolean negativeEU = EUt < 0;
         int tier = getOverclockingTier(voltage);
-        if (GTValues.V[tier] <= EUt || tier == 0)
+        if (V[tier] <= EUt || tier == 0)
             return new int[]{EUt, duration};
         if (negativeEU)
             EUt = -EUt;
@@ -266,7 +277,7 @@ public abstract class AbstractRecipeLogic extends MTETrait implements IWorkable 
             int resultEUt = EUt;
             double resultDuration = duration;
             //do not overclock further if duration is already too small
-            while (resultDuration >= 3 && resultEUt <= GTValues.V[tier - 1]) {
+            while (resultDuration >= 3 && resultEUt <= V[tier - 1]) {
                 resultEUt *= 4;
                 resultDuration /= 2.8;
             }
@@ -275,11 +286,16 @@ public abstract class AbstractRecipeLogic extends MTETrait implements IWorkable 
     }
 
     protected int getOverclockingTier(long voltage) {
-        return GTUtility.getTierByVoltage(voltage);
+        if(ConfigHolder.gregicalityOverclocking) {
+            return GTUtility.getGATierByVoltage(voltage);
+        }
+        else{
+            return GTUtility.getTierByVoltage(voltage);
+        }
     }
 
     protected long getVoltageByTier(final int tier) {
-        return GTValues.V[tier];
+        return V[tier];
     }
 
     public String[] getAvailableOverclockingTiers() {
@@ -287,7 +303,7 @@ public abstract class AbstractRecipeLogic extends MTETrait implements IWorkable 
         final String[] result = new String[maxTier + 2];
         result[0] = "gregtech.gui.overclock.off";
         for (int i = 0; i < maxTier + 1; ++i) {
-            result[i+1] = GTValues.VN[i];
+            result[i+1] = VN[i];
         }
         return result;
     }
@@ -308,7 +324,7 @@ public abstract class AbstractRecipeLogic extends MTETrait implements IWorkable 
     }
 
     protected int getMachineTierForRecipe(Recipe recipe) {
-        return GTUtility.getTierByVoltage(getMaxVoltage());
+        return GTUtility.getGATierByVoltage(getMaxVoltage());
     }
 
     protected void completeRecipe() {

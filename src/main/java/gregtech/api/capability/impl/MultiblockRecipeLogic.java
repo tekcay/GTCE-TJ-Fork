@@ -17,6 +17,8 @@ public class MultiblockRecipeLogic extends AbstractRecipeLogic {
     public void update() {
     }
 
+
+
     public void updateWorkable() {
         super.update();
     }

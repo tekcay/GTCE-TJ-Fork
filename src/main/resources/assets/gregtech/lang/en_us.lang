@@ -537,8 +537,6 @@ metaitem.smart_item_filter.tooltip=Filters items basing on specific machine's re
 
 metaitem.cover.controller.name=Machine Controller
 metaitem.cover.controller.tooltip=Turns Machines ON/OFF
-metaitem.cover.activity.detector.name=Activity Detector
-metaitem.cover.activity.detector.tooltip=Gives out Activity as Redstone
 metaitem.cover.fluid.detector.name=Fluid Detector
 metaitem.cover.fluid.detector.tooltip=Gives out Fluid Amount as Redstone
 metaitem.cover.item.detector.name=Item Detector
@@ -560,10 +558,38 @@ metaitem.cover.shutter.tooltip=Blocks side of machine from any interactions
 
 metaitem.cover.solar.panel.name=Solar Panel
 metaitem.cover.solar.panel.tooltip=May the Sun be with you
+metaitem.cover.solar.panel.lv.tooltip=Low Voltage Solar Panel
 metaitem.cover.solar.panel.ulv.name=Solar Panel (8V)
 metaitem.cover.solar.panel.ulv.tooltip=8 Volt Solar Panel
 metaitem.cover.solar.panel.lv.name=Solar Panel (LV)
-metaitem.cover.solar.panel.lv.tooltip=Low Voltage Solar Panel
+metaitem.cover.solar.panel.mv.name=Solar Panel (MV)
+metaitem.cover.solar.panel.hv.name=Solar Panel (HV)
+metaitem.cover.solar.panel.ev.name=Solar Panel (EV)
+metaitem.cover.solar.panel.iv.name=Solar Panel (IV)
+metaitem.cover.solar.panel.luv.name=Solar Panel (LuV)
+metaitem.cover.solar.panel.zpm.name=Solar Panel (ZPM)
+metaitem.cover.solar.panel.uv.name=Solar Panel (UV)
+metaitem.cover.solar.panel.max.name=Supra Solar Panel (MAX)
+
+metaitem.cover.activity.detector.name=Activity Detector
+metaitem.cover.activity.detector.tooltip=Gives out Activity Status as Redstone (as Cover)
+metaitem.cover.activity.detector.advanced.name=Advanced Activity Detector
+metaitem.cover.activity.detector_advanced.tooltip=Gives out Progress Status as Redstone (as Cover)
+
+gregtech.cover.energy_detector.message_electricity_storage_normal=Monitoring Normal Electricity Storage
+gregtech.cover.energy_detector.message_electricity_storage_inverted=Monitoring Inverted Electricity Storage
+
+gregtech.cover.fluid_detector.message_fluid_storage_normal=Monitoring Normal Fluid Storage
+gregtech.cover.fluid_detector.message_fluid_storage_inverted=Monitoring Inverted Fluid Storage
+
+gregtech.cover.item_detector.message_item_storage_normal=Monitoring Normal Item Storage
+gregtech.cover.item_detector.message_item_storage_inverted=Monitoring Inverted Item Storage
+
+gregtech.cover.activity_detector.message_activity_normal=Monitoring Normal Activity Status
+gregtech.cover.activity_detector.message_activity_inverted=Monitoring Inverted Activity Status
+
+gregtech.cover.activity_detector_advanced.message_activity_normal=Monitoring Normal Progress Status
+gregtech.cover.activity_detector_advanced.message_activity_inverted=Monitoring Inverted Progress Status
 
 metaitem.tool.cheat.name=Debug Scanner
 metaitem.tool.cheat.tooltip=Also an Infinite Energy Source
@@ -699,6 +725,7 @@ metaitem.tool.tooltip.mining_speed=Mining speed: %,.1f
 metaitem.tool.tooltip.durability=Durability: %,d/%,d
 metaitem.tool.tooltip.rotor.efficiency=Rotor Efficiency: %,d%%
 metaitem.tool.tooltip.hammer.extra_drop=Has a chance to drop double crushed ores
+metaitem.tool.tooltip.hammer.structure.check=Can be used to force a structure check on multiblocks with right-click
 
 cover.filter.blacklist.disabled=Whitelist
 cover.filter.blacklist.enabled=Blacklist
@@ -1646,7 +1673,7 @@ behavior.plunger.description=Use to clear 1000 mb out of a machine's output tank
 behavior.toggle_energy_consumer.tooltip=Use to toggle mode
 
 enchantment.damage.endermen=Disjunction
-enchantment.damage.radioactivity=Radioactivity
+enchantment.hard.hammer=Hammering
 
 tile.gt.seal.name=Sealed Block
 tile.gt.foam.name=Foam
@@ -2282,10 +2309,15 @@ gregtech.machine.quantum_chest.items_stored=Item Amount:
 gregtech.machine.quantum_chest.tooltip.item=Item Stored: §b%s
 gregtech.machine.quantum_chest.tooltip.count=Item Amount: §e%,d
 
-gregtech.machine.quantum_chest.mv.name=Basic Quantum Chest
-gregtech.machine.quantum_chest.hv.name=Advanced Quantum Chest
-gregtech.machine.quantum_chest.ev.name=Advanced Quantum Chest II
-gregtech.machine.quantum_chest.iv.name=Black Hole-Quantum Chest III
+gregtech.machine.quantum_chestlv.name=Super Chest I
+gregtech.machine.quantum_chest.mv.name=Super Chest II
+gregtech.machine.quantum_chest.hv.name=Super Chest III
+gregtech.machine.quantum_chest.ev.name=Super Chest IV
+gregtech.machine.quantum_chest.iv.name=Quantum Chest I
+gregtech.machine.quantum_chestluv.name=Quantum Chest II
+gregtech.machine.quantum_chestzpm.name=Quantum Chest III
+gregtech.machine.quantum_chestuv.name=Quantum Chest IV
+
 
 #Quantum tanks
 gregtech.machine.quantum_tank.tooltip=Compact place to store all your fluids.
@@ -2293,10 +2325,14 @@ gregtech.machine.quantum_tank.capacity=Fluid Capacity: %,d mb
 gregtech.machine.quantum_tank.tooltip.name=Fluid Stored: §b%s
 gregtech.machine.quantum_tank.tooltip.count=Fluid Amount: §e%,d mb
 
-gregtech.machine.quantum_tank.mv.name=Basic Quantum Tank
-gregtech.machine.quantum_tank.hv.name=Advanced Quantum Tank
-gregtech.machine.quantum_tank.ev.name=Advanced Quantum Tank II
-gregtech.machine.quantum_tank.iv.name=Black Hole-Quantum Tank III
+gregtech.machine.quantum_tanklv.name=Super Tank I
+gregtech.machine.quantum_tank.mv.name=Super Tank II
+gregtech.machine.quantum_tank.hv.name=Super Tank III
+gregtech.machine.quantum_tank.ev.name=Super Tank IV
+gregtech.machine.quantum_tank.iv.name=Quantum Tank I
+gregtech.machine.quantum_tankluv.name=Quantum Tank II
+gregtech.machine.quantum_tankzpm.name=Quantum Tank III
+gregtech.machine.quantum_tankuv.name=Quantum Tank IV
 
 #Air Collectors
 gregtech.machine.air_collector.lv.name=Basic Air Collector
@@ -2792,6 +2828,8 @@ gregtech.machine.primitive_blast_furnace.bronze.tooltip=Structure: 3x3x4 (WxLxH)
 
 # Multiblock machine parts
 gregtech.machine.item_bus.import.tooltip=Item Input for Multiblocks
+gregtech.universal.disabled=Sharing between Multiblocks: §4Disabled
+gregtech.universal.enabled=Sharing between Multiblocks: §aEnabled
 
 gregtech.machine.item_bus.import.ulv.name=Input Bus (ULV)
 gregtech.machine.item_bus.import.lv.name=Input Bus (LV)
@@ -2816,6 +2854,8 @@ gregtech.machine.item_bus.export.luv.name=Output Bus (LuV)
 gregtech.machine.item_bus.export.zpm.name=Output Bus (ZPM)
 gregtech.machine.item_bus.export.uv.name=Output Bus (UV)
 gregtech.machine.item_bus.export.max.name=Output Bus (MAX)
+
+gregtech.bus.collapse=Allow Bus to auto combine item stacks %s
 
 gregtech.machine.fluid_hatch.import.tooltip=Fluid Input for Multiblocks
 
@@ -2890,7 +2930,7 @@ gregtech.machine.item_controller.tooltip.consumption=While working, constantly c
 gregtech.universal.tooltip.voltage_in=Voltage IN: §a%,d §7(§a%s§7)
 gregtech.universal.tooltip.voltage_out=Voltage OUT: §a%,d §7(§a%s§7)
 gregtech.universal.tooltip.energy_storage_capacity=Internal Energy Capacity: §9%,d
-gregtech.universal.tooltip.amperage_in=Amperage IN: §e%,d
+gregtech.universal.tooltip.amperage_in=Amperage IN: §e_%,d
 gregtech.universal.tooltip.amperage_in_till=Amperage IN up to: §e%,d
 gregtech.universal.tooltip.amperage_out=Amperage OUT: §e%,d
 gregtech.universal.tooltip.amperage_out_till=Amperage OUT up to: §e%,d

@@ -34,7 +34,7 @@ import java.util.List;
 
 public class MetaTileEntityRotorHolder extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<MetaTileEntityRotorHolder> {
 
-    private static final int NORMAL_MAXIMUM_SPEED = 6000;
+    private static final int NORMAL_MAXIMUM_SPEED = 12000;
     private static final float DAMAGE_PER_INTERACT = 40.0f;
 
     private InventoryRotorHolder rotorInventory;

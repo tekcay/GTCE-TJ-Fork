@@ -109,6 +109,29 @@ public class ConfigHolder {
     @Config.RequiresMcRestart
     public static boolean doLosslessWiresMakeLossyCables = false;
 
+    @Config.Comment("Amount of time in ticks for multiblock structures to run a structure check")
+    @Config.RequiresMcRestart
+    @Config.RangeInt(min = 20, max = 1200)
+    public static int structureCheckOffSetTimer = 20;
+
+    @Config.Comment("Whether to use GCY tiers for overclocking or use CE's tiers")
+    @Config.RequiresMcRestart
+    public static boolean gregicalityOverclocking = false;
+
+    @Config.Comment("Whether to add solar panels from MV-UV")
+    @Config.RequiresMcRestart
+    public static boolean enableHighTierSolar = true;
+
+    @Config.Comment("Whether to add the max solar panel(Creative item)")
+    @Config.RequiresMcRestart
+    public static boolean enableSupraSolar = false;
+
+    @Config.Comment("Whether to add the hammering enchant. used to crush ores instead of mine them")
+    @Config.RequiresMcRestart
+    public static boolean enableHammeringEnchant = false;
+
+
+
     public static class VanillaRecipes {
 
         @Config.Comment("Whether to nerf the paper crafting recipe. Default: true")
@@ -158,4 +181,5 @@ public class ConfigHolder {
         @Config.RequiresMcRestart
         public int energyConsumption = 64;
     }
+
 }

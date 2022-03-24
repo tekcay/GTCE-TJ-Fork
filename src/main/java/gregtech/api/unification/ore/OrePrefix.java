@@ -176,7 +176,7 @@ public enum OrePrefix {
 
     static {
         ingotHot.heatDamage = 3.0F;
-        ingotHot.maxStackSize = 16;
+       // ingotHot.maxStackSize = 16;
         gemFlawless.maxStackSize = 32;
         gemExquisite.maxStackSize = 16;
 

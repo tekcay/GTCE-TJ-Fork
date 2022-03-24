@@ -321,6 +321,7 @@ public final class MetaItems {
     public static MetaItem<?>.MetaValueItem COVER_FACADE;
 
     public static MetaItem<?>.MetaValueItem COVER_ACTIVITY_DETECTOR;
+    public static MetaItem<?>.MetaValueItem COVER_ACTIVITY_DETECTOR_ADVANCED;
     public static MetaItem<?>.MetaValueItem COVER_FLUID_DETECTOR;
     public static MetaItem<?>.MetaValueItem COVER_ITEM_DETECTOR;
     public static MetaItem<?>.MetaValueItem COVER_ENERGY_DETECTOR;
@@ -332,6 +333,15 @@ public final class MetaItems {
     public static MetaItem<?>.MetaValueItem COVER_SOLAR_PANEL;
     public static MetaItem<?>.MetaValueItem COVER_SOLAR_PANEL_ULV;
     public static MetaItem<?>.MetaValueItem COVER_SOLAR_PANEL_LV;
+    public static MetaItem<?>.MetaValueItem COVER_SOLAR_PANEL_MV;
+    public static MetaItem<?>.MetaValueItem COVER_SOLAR_PANEL_HV;
+    public static MetaItem<?>.MetaValueItem COVER_SOLAR_PANEL_EV;
+    public static MetaItem<?>.MetaValueItem COVER_SOLAR_PANEL_IV;
+    public static MetaItem<?>.MetaValueItem COVER_SOLAR_PANEL_LuV;
+    public static MetaItem<?>.MetaValueItem COVER_SOLAR_PANEL_ZPM;
+    public static MetaItem<?>.MetaValueItem COVER_SOLAR_PANEL_UV;
+    public static MetaItem<?>.MetaValueItem COVER_SOLAR_PANEL_MAX;
+
 
     public static MetaItem<?>.MetaValueItem INTEGRATED_CIRCUIT;
 
