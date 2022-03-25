@@ -72,7 +72,7 @@ version = "$mcVersion-$modVersion"
 group = "gregtech"
 
 configure<BasePluginConvention> {
-    archivesBaseName = "GregTech_TJ_edition"
+    archivesBaseName = "GregTech_TJ_Fork"
 }
 
 fun minecraft(configure: UserBaseExtension.() -> Unit) = project.configure(configure)
