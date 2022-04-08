@@ -91,6 +91,11 @@ public class MetaTileEntityRotorHolder extends MetaTileEntityMultiblockPart impl
         }
     }
 
+    @Override
+    public boolean canPartShare() {
+        return false;
+    }
+
     /**
      * @return true if front face is free and contains only air blocks in 3x3 area
      */

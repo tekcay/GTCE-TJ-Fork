@@ -196,7 +196,7 @@ public abstract class MultiblockControllerBase extends MetaTileEntity {
             parts.sort(Comparator.comparing(it -> ((MetaTileEntity) it).getPos().hashCode()));
             for (IMultiblockPart part : parts) {
                 if (part.isAttachedToMultiBlock()) {
-                    if (!canShare() || part instanceof MetaTileEntityRotorHolder) {
+                    if (!canShare() || !part.canPartShare()) {
                         return;
                     }
                 }
