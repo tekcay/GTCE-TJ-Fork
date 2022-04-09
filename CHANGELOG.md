@@ -1,5 +1,15 @@
 ## Changelog
 
+### 1.17.3
+* Fix the right click action of tanks - BraggestSage833
+* Lock OC to 2.8, allow OC until the recipe hits one tick, and add method to allow mutliblock parts to disable sharing - BraggestSage833
+* Fix weird jar name - BraggestSage833
+* Update default configs - BraggestSage833
+* Update README.md - BraggestSage833
+* Remove un-used code and fix merge issue - BraggestSage833
+* First round of fixes laid out on Curseforge - BraggestSage833
+* Add permission from arch - BraggestSage833
+
 ### 1.17.2
 
 
