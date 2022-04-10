@@ -279,13 +279,8 @@ public abstract class MultiblockControllerBase extends MetaTileEntity {
         if(!getWorld().isRemote) {
             this.checkStructurePattern();
 
-            if (structureFormed) {
-
-                updateFormedValid();
-            }
-
             return false;
-        }
+            }
         }
 
         return super.onRightClick(playerIn, hand, facing, hitResult);
