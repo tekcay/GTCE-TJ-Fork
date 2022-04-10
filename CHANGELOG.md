@@ -1,7 +1,12 @@
 ## Changelog
 
-### 1.17.3
+### 1.17.4
+* Increase version number - BraggestSage833
+* Update multiblock parts with sharing tooltips and fix workable exploit with forcing structure checks - BraggestSage833
 * Fix the right click action of tanks - BraggestSage833
+
+
+### 1.17.3
 * Lock OC to 2.8, allow OC until the recipe hits one tick, and add method to allow mutliblock parts to disable sharing - BraggestSage833
 * Fix weird jar name - BraggestSage833
 * Update default configs - BraggestSage833
@@ -13,7 +18,6 @@
 ### 1.17.2
 
 
-### 1.17.1
 
 
 ### 1.17.1
