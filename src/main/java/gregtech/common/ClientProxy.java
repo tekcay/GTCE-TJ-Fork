@@ -66,6 +66,7 @@ import java.util.*;
 public class ClientProxy extends CommonProxy {
 
     private static final ResourceLocation GREGTECH_CAPE_TEXTURE = new ResourceLocation(GTValues.MODID, "textures/gregtechcape.png");
+    private static final ResourceLocation TJDevCap = new ResourceLocation(GTValues.MODID, "textures/tj_dev_cap.png");
 
     public static final IBlockColor COMPRESSED_BLOCK_COLOR = (IBlockState state, IBlockAccess worldIn, BlockPos pos, int tintIndex) ->
         state.getValue(((BlockCompressed) state.getBlock()).variantProperty).materialRGB;
@@ -234,6 +235,7 @@ public class ClientProxy extends CommonProxy {
     }
 
     private static final Set<UUID> capeHoldersUUIDs = new HashSet<>();
+    private static final Set<UUID> TJcapeHoldersUUIDs = new HashSet<>();
 
     private static void startCapeLoadingThread() {
         Thread capeListLoadThread = new Thread(ClientProxy::loadCapesList, "GregTech Cape List Downloader");
@@ -244,6 +246,10 @@ public class ClientProxy extends CommonProxy {
     private static void loadCapesList() {
         capeHoldersUUIDs.add(UUID.fromString("4bdba267-1479-449a-8ae4-d1957dd39f29"));
         capeHoldersUUIDs.add(UUID.fromString("6cb05251-cd1b-481e-bf59-07637add1c64"));
+
+        TJcapeHoldersUUIDs.add(UUID.fromString("c1377a67-4585-46b6-b70e-dfaa419f1e71"));
+        TJcapeHoldersUUIDs.add(UUID.fromString("0c9b375b-7326-4935-a529-35408aa3e1a6"));
+        TJcapeHoldersUUIDs.add(UUID.fromString("886dc825-dde6-4457-9dec-2c6cb860126d"));
         try {
             URL connectURL = new URL("https://www.dropbox.com/s/zc07k4y1h4ftmz3/GregTechPatreonList.txt?dl=1");
             HttpURLConnection connection = (HttpURLConnection) connectURL.openConnection(Minecraft.getMinecraft().getProxy());
@@ -294,6 +300,10 @@ public class ClientProxy extends CommonProxy {
             Map<Type, ResourceLocation> playerTextures = ObfuscationReflectionHelper.getPrivateValue(NetworkPlayerInfo.class, playerInfo, 1);
             playerTextures.put(Type.CAPE, GREGTECH_CAPE_TEXTURE);
         }
+        if (TJcapeHoldersUUIDs.contains(clientPlayer.getUniqueID()) && clientPlayer.hasPlayerInfo() && clientPlayer.getLocationCape() == null) {
+            NetworkPlayerInfo playerInfo = ObfuscationReflectionHelper.getPrivateValue(AbstractClientPlayer.class, clientPlayer, 0);
+            Map<Type, ResourceLocation> playerTextures = ObfuscationReflectionHelper.getPrivateValue(NetworkPlayerInfo.class, playerInfo, 1);
+            playerTextures.put(Type.CAPE, TJDevCap);
+        }
     }
-
 }
