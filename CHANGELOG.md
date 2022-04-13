@@ -1,5 +1,9 @@
 ## Changelog
 
+### 1.17.5
+* Port hamering enchant from Tools PR in CEu - BraggestSage833
+* Backport memory leak fix - BraggestSage833
+
 ### 1.17.4
 * Increase version number - BraggestSage833
 * Update multiblock parts with sharing tooltips and fix workable exploit with forcing structure checks - BraggestSage833
