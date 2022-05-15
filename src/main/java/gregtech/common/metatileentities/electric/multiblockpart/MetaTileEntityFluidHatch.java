@@ -76,11 +76,13 @@ public class MetaTileEntityFluidHatch extends MetaTileEntityMultiblockPart imple
         super.update();
         if (!getWorld().isRemote) {
             fillContainerFromInternalTank(containerInventory, containerInventory, 0, 1);
-            if (isExportHatch) {
+            if (isExportHatch && fluidTank.getFluidAmount() > 0) {
                 pushFluidsIntoNearbyHandlers(getFrontFacing());
             } else {
                 fillInternalTankFromFluidContainer(containerInventory, containerInventory, 0, 1);
-                pullFluidsFromNearbyHandlers(getFrontFacing());
+                if(fluidTank.getFluidAmount() < fluidTank.getCapacity()) {
+                    pullFluidsFromNearbyHandlers(getFrontFacing());
+                }
             }
         }
     }
