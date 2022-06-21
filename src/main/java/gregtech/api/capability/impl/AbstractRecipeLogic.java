@@ -8,6 +8,7 @@ import gregtech.api.metatileentity.MTETrait;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeMap;
+import gregtech.api.util.GTLog;
 import gregtech.api.util.GTUtility;
 import gregtech.common.ConfigHolder;
 import net.minecraft.item.ItemStack;
@@ -59,6 +60,7 @@ public abstract class AbstractRecipeLogic extends MTETrait implements IWorkable 
 
     private int sleepTimer = 0;
     private int sleepTime = 1;
+    private int failCount = 0;
 
     public AbstractRecipeLogic(MetaTileEntity tileEntity, RecipeMap<?> recipeMap) {
         super(tileEntity);
@@ -127,10 +129,15 @@ public abstract class AbstractRecipeLogic extends MTETrait implements IWorkable 
                 if (progressTime == 0 && sleepTimer == 0) {
                     boolean result = trySearchNewRecipe();
                     if (!result) {
+                        failCount++;
+                        if (failCount == 5) {
+                            sleepTime = Math.min(sleepTime * 2, 40);
+                            failCount = 0;
+                        }
                         sleepTimer = sleepTime;
-                        sleepTime = Math.max(sleepTime * 2, 40);
                     } else {
                         sleepTime = 1;
+                        failCount = 0;
                     }
                 }
                 sleepTimer = Math.max(0, sleepTimer - 1);
