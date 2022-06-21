@@ -100,7 +100,7 @@ public class MetaTileEntityMultiFurnace extends RecipeMapMultiblockController {
         }
 
         @Override
-        protected void trySearchNewRecipe() {
+        protected boolean trySearchNewRecipe() {
             long maxVoltage = getMaxVoltage();
             Recipe currentRecipe = null;
             IItemHandlerModifiable importInventory = getInputInventory();
@@ -123,7 +123,9 @@ public class MetaTileEntityMultiFurnace extends RecipeMapMultiblockController {
             }
             if (currentRecipe != null && setupAndConsumeRecipeInputs(currentRecipe)) {
                 setupRecipe(currentRecipe);
+                return true;
             }
+            return false;
         }
 
         @Override

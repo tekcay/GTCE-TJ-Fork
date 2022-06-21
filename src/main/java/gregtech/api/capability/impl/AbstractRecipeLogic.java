@@ -57,6 +57,9 @@ public abstract class AbstractRecipeLogic extends MTETrait implements IWorkable 
     private final long[] V;
     private final String[] VN;
 
+    private int sleepTimer = 0;
+    private int sleepTime = 1;
+
     public AbstractRecipeLogic(MetaTileEntity tileEntity, RecipeMap<?> recipeMap) {
         super(tileEntity);
         this.recipeMap = recipeMap;
@@ -121,9 +124,16 @@ public abstract class AbstractRecipeLogic extends MTETrait implements IWorkable 
                 if (progressTime > 0) {
                     updateRecipeProgress();
                 }
-                if (progressTime == 0) {
-                    trySearchNewRecipe();
+                if (progressTime == 0 && sleepTimer == 0) {
+                    boolean result = trySearchNewRecipe();
+                    if (!result) {
+                        sleepTimer = sleepTime;
+                        sleepTime = Math.max(sleepTime * 2, 40);
+                    } else {
+                        sleepTime = 1;
+                    }
                 }
+                sleepTimer = Math.max(0, sleepTimer - 1);
             }
             if (wasActiveAndNeedsUpdate) {
                 this.wasActiveAndNeedsUpdate = false;
@@ -154,7 +164,7 @@ public abstract class AbstractRecipeLogic extends MTETrait implements IWorkable 
         }
     }
 
-    protected void trySearchNewRecipe() {
+    protected boolean trySearchNewRecipe() {
         long maxVoltage = getMaxVoltage();
         Recipe currentRecipe = null;
         IItemHandlerModifiable importInventory = getInputInventory();
@@ -175,7 +185,9 @@ public abstract class AbstractRecipeLogic extends MTETrait implements IWorkable 
         }
         if (currentRecipe != null && setupAndConsumeRecipeInputs(currentRecipe)) {
             setupRecipe(currentRecipe);
+            return true;
         }
+        return false;
     }
 
     public void forceRecipeRecheck() {
