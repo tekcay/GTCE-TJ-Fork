@@ -139,7 +139,8 @@ public abstract class AbstractRecipeLogic extends MTETrait implements IWorkable 
                         failCount = 0;
                     }
                 }
-                sleepTimer = Math.max(0, sleepTimer - 1);
+                if (sleepTimer > 0)
+                    sleepTimer--;
             }
             if (wasActiveAndNeedsUpdate) {
                 this.wasActiveAndNeedsUpdate = false;
