@@ -2801,27 +2801,27 @@ behaviour.paintspray.uses=Remaining Uses: %,d
 behaviour.prospecting=Usable for Prospecting
 
 # Multiblock machine controllers
-gregtech.machine.primitive_blast_furnace.bronze.name=Primitive Blast Furnace
-gregtech.machine.electric_blast_furnace.name=Electric Blast Furnace
-gregtech.machine.vacuum_freezer.name=Vacuum Freezer
-gregtech.machine.implosion_compressor.name=Implosion Compressor
-gregtech.machine.pyrolyse_oven.name=Pyrolyse Oven
-gregtech.machine.distillation_tower.name=Distillation Tower
-gregtech.machine.multi_furnace.name=Multi Smelter
-gregtech.machine.cracker.name=Cracker Unit
-gregtech.machine.coke_oven.name=Coke Oven
-gregtech.machine.coke_oven_hatch.name=Coke Oven Hatch
+gregtech.machine.primitive_blast_furnace.bronze.name=Primitive Blast Furnace(PBF)
+gregtech.machine.electric_blast_furnace.name=Electric Blast Furnace(EBF)
+gregtech.machine.vacuum_freezer.name=Vacuum Freezer(VF)
+gregtech.machine.implosion_compressor.name=Implosion Compressor(IC)
+gregtech.machine.pyrolyse_oven.name=Pyrolyse Oven(PO)
+gregtech.machine.distillation_tower.name=Distillation Tower(DT)
+gregtech.machine.multi_furnace.name=Multi Smelter(MS)
+gregtech.machine.cracker.name=Cracker Unit(CU)
+gregtech.machine.coke_oven.name=Coke Oven(CO)
+gregtech.machine.coke_oven_hatch.name=Coke Oven Hatch(COH)
 gregtech.machine.coke_oven_hatch.tooltip=Allows automation access to coke oven. Must be centered on coke oven side.
 
-gregtech.machine.diesel_engine.name=Diesel Engine
-gregtech.machine.large_turbine.steam.name=Large Steam Turbine
-gregtech.machine.large_turbine.gas.name=Large Gas Turbine
-gregtech.machine.large_turbine.plasma.name=Large Plasma Turbine
+gregtech.machine.diesel_engine.name=Diesel Engine(DE)
+gregtech.machine.large_turbine.steam.name=Large Steam Turbine(LST)
+gregtech.machine.large_turbine.gas.name=Large Gas Turbine(LGT)
+gregtech.machine.large_turbine.plasma.name=Large Plasma Turbine(LPT)
 
-gregtech.machine.large_boiler.bronze.name=Large Bronze Boiler
-gregtech.machine.large_boiler.steel.name=Large Steel Boiler
-gregtech.machine.large_boiler.titanium.name=Large Titanium Boiler
-gregtech.machine.large_boiler.tungstensteel.name=Large Tungstensteel Boiler
+gregtech.machine.large_boiler.bronze.name=Large Bronze Boiler(LBB)
+gregtech.machine.large_boiler.steel.name=Large Steel Boiler(LSB)
+gregtech.machine.large_boiler.titanium.name=Large Titanium Boiler(LTB)
+gregtech.machine.large_boiler.tungstensteel.name=Large Tungstensteel Boiler(LTB)
 
 # Multiblock Tooltips
 gregtech.machine.primitive_blast_furnace.bronze.tooltip=Structure: 3x3x4 (WxLxH) The entire structure is made out of Primitive Bricks (32 in total)./nFirst Layer is a 3x3 square./nSecond, third, and fourth layers are hollow, without the middle block./nThis block goes on the middle of any side in the second layer./nThe sides of Blast Furnaces can be shared, if the side does not have a controller./n
