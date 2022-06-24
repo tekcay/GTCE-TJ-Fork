@@ -2259,9 +2259,9 @@ gregtech.machine.battery_buffer.max.16.name=MAX Voltage Battery Buffer
 # Transformers
 gregtech.machine.transformer.tooltip_tool_usage=Use Soft Hammer to invert (Starts as Transform Down)
 gregtech.machine.transformer.tooltip_transform_down=Transform Down:
-gregtech.machine.transformer.message_transform_down=Transforming Down, In: %,dV %,d Amp, Out: %,dV %,d Amp
+gregtech.machine.transformer.message_transform_down=Transforming Down, In: %dV %d Amp, Out: %dV %d Amp
 gregtech.machine.transformer.tooltip_transform_up=Transform Up:
-gregtech.machine.transformer.message_transform_up=Transforming Up, In: %,dV %,d Amp, Out: %,dV %,d Amp
+gregtech.machine.transformer.message_transform_up=Transforming Up, In: %dV %d Amp, Out: %dV %d Amp
 
 gregtech.machine.transformer.lv.name=Low Voltage Transformer
 gregtech.machine.transformer.mv.name=Medium Voltage Transformer
@@ -2930,7 +2930,7 @@ gregtech.machine.item_controller.tooltip.consumption=While working, constantly c
 gregtech.universal.tooltip.voltage_in=Voltage IN: §a%,d §7(§a%s§7)
 gregtech.universal.tooltip.voltage_out=Voltage OUT: §a%,d §7(§a%s§7)
 gregtech.universal.tooltip.energy_storage_capacity=Internal Energy Capacity: §9%,d
-gregtech.universal.tooltip.amperage_in=Amperage IN: §e_%,d
+gregtech.universal.tooltip.amperage_in=Amperage IN: §e%,d
 gregtech.universal.tooltip.amperage_in_till=Amperage IN up to: §e%,d
 gregtech.universal.tooltip.amperage_out=Amperage OUT: §e%,d
 gregtech.universal.tooltip.amperage_out_till=Amperage OUT up to: §e%,d

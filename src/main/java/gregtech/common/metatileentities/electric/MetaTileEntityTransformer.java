@@ -12,6 +12,7 @@ import gregtech.api.gui.ModularUI;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.MetaTileEntityHolder;
 import gregtech.api.metatileentity.TieredMetaTileEntity;
+import gregtech.api.render.SimpleOverlayRenderer;
 import gregtech.api.render.Textures;
 import gregtech.api.util.PipelineUtil;
 import gregtech.common.tools.DamageValues;
@@ -27,6 +28,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
 import java.util.List;
 
 public class MetaTileEntityTransformer extends TieredMetaTileEntity {
@@ -73,6 +75,7 @@ public class MetaTileEntityTransformer extends TieredMetaTileEntity {
         super.receiveCustomData(dataId, buf);
         if (dataId == 100) {
             this.isTransformUp = buf.readBoolean();
+            scheduleRenderUpdate();
         }
     }
 
@@ -95,26 +98,28 @@ public class MetaTileEntityTransformer extends TieredMetaTileEntity {
         long tierVoltage = GTValues.V[getTier()];
         if (isTransformUp) {
             //storage = 1 amp high; input = tier / 4; amperage = 4; output = tier; amperage = 1
-            this.energyContainer = new EnergyContainerHandler(this, tierVoltage * 8L, tierVoltage / 4, 4, tierVoltage, 1);
-        } else {
+            this.energyContainer = new EnergyContainerHandler(this, tierVoltage * 8L, tierVoltage, 4, tierVoltage * 4, 1);
+            ((EnergyContainerHandler) this.energyContainer).setSideInputCondition(s -> s != getFrontFacing());
+            ((EnergyContainerHandler) this.energyContainer).setSideOutputCondition(s -> s == getFrontFacing());
+        } else{
             //storage = 1 amp high; input = tier; amperage = 1; output = tier / 4; amperage = 4
-            this.energyContainer = new EnergyContainerHandler(this, tierVoltage * 8L, tierVoltage, 1, tierVoltage / 4, 4);
+            this.energyContainer = new EnergyContainerHandler(this, tierVoltage * 8L, tierVoltage * 4, 1, tierVoltage, 4);
+            ((EnergyContainerHandler) this.energyContainer).setSideInputCondition(s -> s == getFrontFacing());
+            ((EnergyContainerHandler) this.energyContainer).setSideOutputCondition(s -> s != getFrontFacing());
         }
-        ((EnergyContainerHandler) this.energyContainer).setSideInputCondition(s -> s == getFrontFacing());
-        ((EnergyContainerHandler) this.energyContainer).setSideOutputCondition(s -> s == getFrontFacing().getOpposite());
     }
 
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
-        if (isTransformUp) {
-            Textures.ENERGY_OUT_MULTI.renderSided(getFrontFacing(), renderState, translation, PipelineUtil.color(pipeline, GTValues.VC[getTier() - 1]));
-            Textures.ENERGY_IN.renderSided(getFrontFacing().getOpposite(), renderState, translation, PipelineUtil.color(pipeline, GTValues.VC[getTier()]));
-        } else {
-            Textures.ENERGY_IN_MULTI.renderSided(getFrontFacing(), renderState, translation, PipelineUtil.color(pipeline, GTValues.VC[getTier()]));
-            Textures.ENERGY_OUT.renderSided(getFrontFacing().getOpposite(), renderState, translation, PipelineUtil.color(pipeline, GTValues.VC[getTier() - 1]));
-        }
+
+        SimpleOverlayRenderer otherFaceTexture = isTransformUp ? Textures.ENERGY_IN : Textures.ENERGY_OUT;
+        SimpleOverlayRenderer frontFaceTexture = isTransformUp ? Textures.ENERGY_OUT_MULTI : Textures.ENERGY_IN_MULTI;
+        frontFaceTexture.renderSided(frontFacing,renderState,translation,PipelineUtil.color(pipeline, GTValues.VC[getTier() + 1]));
+        Arrays.stream(EnumFacing.values()).filter(f -> f != frontFacing)
+                .forEach((f -> otherFaceTexture.renderSided(f,renderState,translation,PipelineUtil.color(pipeline, GTValues.VC[getTier()]))));
     }
+
 
     @Override
     public boolean isValidFrontFacing(EnumFacing facing) {
@@ -128,6 +133,7 @@ public class MetaTileEntityTransformer extends TieredMetaTileEntity {
             ISoftHammerItem softHammerItem = itemStack.getCapability(GregtechCapabilities.CAPABILITY_MALLET, null);
 
             if (getWorld().isRemote) {
+                scheduleRenderUpdate();
                 return true;
             }
             if(!softHammerItem.damageItem(DamageValues.DAMAGE_FOR_SOFT_HAMMER, false)) {
@@ -137,14 +143,13 @@ public class MetaTileEntityTransformer extends TieredMetaTileEntity {
             if (isTransformUp) {
                 setTransformUp(false);
                 playerIn.sendMessage(new TextComponentTranslation("gregtech.machine.transformer.message_transform_down",
-                    energyContainer.getInputVoltage(), energyContainer.getInputAmperage(), energyContainer.getOutputVoltage(), energyContainer.getOutputAmperage()));
-                return true;
+                        energyContainer.getInputVoltage(), energyContainer.getInputAmperage(), energyContainer.getOutputVoltage(), energyContainer.getOutputAmperage()));
             } else {
                 setTransformUp(true);
                 playerIn.sendMessage(new TextComponentTranslation("gregtech.machine.transformer.message_transform_up",
-                    energyContainer.getInputVoltage(), energyContainer.getInputAmperage(), energyContainer.getOutputVoltage(), energyContainer.getOutputAmperage()));
-                return true;
+                        energyContainer.getInputVoltage(), energyContainer.getInputAmperage(), energyContainer.getOutputVoltage(), energyContainer.getOutputAmperage()));
             }
+            return true;
         }
         return false;
     }
@@ -161,8 +166,8 @@ public class MetaTileEntityTransformer extends TieredMetaTileEntity {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
-        String lowerTierName = GTValues.VN[getTier() - 1];
-        String higherTierName = GTValues.VN[getTier()];
+        String lowerTierName = GTValues.VN[getTier()];
+        String higherTierName = GTValues.VN[getTier() + 1];
         long lowerVoltage = energyContainer.getOutputVoltage();
         long higherVoltage = energyContainer.getInputVoltage();
         long lowerAmperage = energyContainer.getInputAmperage();
