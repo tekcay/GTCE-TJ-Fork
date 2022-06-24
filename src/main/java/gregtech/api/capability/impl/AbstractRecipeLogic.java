@@ -130,8 +130,10 @@ public abstract class AbstractRecipeLogic extends MTETrait implements IWorkable 
                     if (!result) {
                         failCount++;
                         if (failCount == 5) {
-                            sleepTime = Math.min(sleepTime * 2, 40);
+
+                            sleepTime = Math.min(sleepTime * 2, (ConfigHolder.maxSleepTime >= 20 && ConfigHolder.maxSleepTime <= 400) ? ConfigHolder.maxSleepTime :  60);
                             failCount = 0;
+
                         }
                         sleepTimer = sleepTime;
                     } else {

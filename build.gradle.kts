@@ -224,45 +224,6 @@ tasks.create("ciWriteBuildNumber") {
     }
 }
 
-tasks.create("generateChangelog") {
-    doLast {
-        val file = file("CHANGELOG.md")
-        val fileContents = StringBuilder(file.readText(Charsets.UTF_8))
-        val versionHeader = "\n### $modVersionNoBuild\n"
-        if (fileContents.contains(versionHeader)) return@doLast
-        val firstNewline = fileContents.indexOf('\n')
-        val changelog = getActualChangeList()
-        val insertText = "\n$versionHeader$changelog"
-        fileContents.insert(firstNewline, insertText)
-        file.writeText(fileContents.toString(), Charsets.UTF_8)
-    }
-}
-
-
-fun resolveVersionChangelog(): String {
-    val changeLogLines = file("CHANGELOG.md").readLines(Charsets.UTF_8)
-    val versionHeader = "### $modVersionNoBuild"
-    val startLineIndex = changeLogLines.indexOf(versionHeader)
-    if (startLineIndex == -1) {
-        return "No changelog provided"
-    }
-    val changelogBuilder = StringBuilder()
-    var lineIndex = startLineIndex
-    while (lineIndex < changeLogLines.size) {
-        val changelogLine = changeLogLines[lineIndex]
-        if (changelogLine.isEmpty()) break
-        changelogBuilder.append(changelogLine).append("\n")
-        lineIndex++
-    }
-    return changelogBuilder.toString()
-}
-
-
-
-tasks["build"].dependsOn("generateChangelog")
-tasks["ciWriteBuildNumber"].dependsOn("generateChangelog")
-//notificationTask.dependsOn("generateChangelog")
-
 fun getPrettyCommitDescription(commit: RevCommit): String {
     val closePattern = Regex("(Closes|Fixes) #[0-9]*\\.?")
     val author = commit.authorIdent.name
