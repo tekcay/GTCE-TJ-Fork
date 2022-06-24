@@ -3,14 +3,17 @@ package gregtech.api.items.armor;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Multimap;
 import gregtech.api.items.metaitem.MetaItem;
+import gregtech.api.items.metaitem.stats.IEnchantabilityHelper;
 import gregtech.api.items.metaitem.stats.IItemComponent;
 import gregtech.api.items.metaitem.stats.IMetaItemStats;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.model.ModelBiped;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
@@ -22,7 +25,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class ArmorMetaItem<T extends ArmorMetaItem<?>.ArmorMetaValueItem> extends MetaItem<T> implements IArmorItem, ISpecialArmor {
+public class ArmorMetaItem<T extends ArmorMetaItem<?>.ArmorMetaValueItem> extends MetaItem<T> implements IArmorItem, ISpecialArmor, IEnchantabilityHelper {
 
     public ArmorMetaItem() {
         super((short) 0);
@@ -91,7 +94,7 @@ public class ArmorMetaItem<T extends ArmorMetaItem<?>.ArmorMetaValueItem> extend
     public boolean isValidArmor(ItemStack stack, EntityEquipmentSlot armorType, Entity entity) {
         IArmorLogic armorLogic = getArmorLogic(stack);
         return super.isValidArmor(stack, armorType, entity) &&
-            armorLogic.isValidArmor(stack, entity, armorType);
+                armorLogic.isValidArmor(stack, entity, armorType);
     }
 
     @Nullable
@@ -136,10 +139,14 @@ public class ArmorMetaItem<T extends ArmorMetaItem<?>.ArmorMetaValueItem> extend
 
     private static EntityEquipmentSlot getSlotByIndex(int index) {
         switch (index) {
-            case 0: return EntityEquipmentSlot.FEET;
-            case 1: return EntityEquipmentSlot.LEGS;
-            case 2: return EntityEquipmentSlot.CHEST;
-            default: return EntityEquipmentSlot.HEAD;
+            case 0:
+                return EntityEquipmentSlot.FEET;
+            case 1:
+                return EntityEquipmentSlot.LEGS;
+            case 2:
+                return EntityEquipmentSlot.CHEST;
+            default:
+                return EntityEquipmentSlot.HEAD;
         }
     }
 
@@ -174,6 +181,37 @@ public class ArmorMetaItem<T extends ArmorMetaItem<?>.ArmorMetaValueItem> extend
         public ArmorMetaValueItem addComponents(IItemComponent... stats) {
             super.addComponents(stats);
             return this;
+        }
+    }
+
+    @Override
+    public boolean isEnchantable(@Nonnull ItemStack stack) {
+        return true;
+    }
+
+    @Override
+    public int getItemEnchantability(@Nonnull ItemStack stack) {
+        return 50;
+    }
+
+    @Override
+    public boolean canApplyAtEnchantingTable(@Nonnull ItemStack stack, @Nonnull Enchantment enchantment) {
+        EntityEquipmentSlot slot = this.getEquipmentSlot(stack);
+        if (slot == null || enchantment.type == null) {
+            return false;
+        }
+
+        switch (slot) {
+            case HEAD:
+                return enchantment.type.canEnchantItem(Items.DIAMOND_HELMET);
+            case CHEST:
+                return enchantment.type.canEnchantItem(Items.DIAMOND_CHESTPLATE);
+            case LEGS:
+                return enchantment.type.canEnchantItem(Items.DIAMOND_LEGGINGS);
+            case FEET:
+                return enchantment.type.canEnchantItem(Items.DIAMOND_BOOTS);
+            default:
+                return enchantment.isAllowedOnBooks();
         }
     }
 }

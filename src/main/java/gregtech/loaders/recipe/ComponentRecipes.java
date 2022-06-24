@@ -452,6 +452,7 @@ public class ComponentRecipes {
             RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
                     .inputs(PUMPS[i].getStackForm())
                     .input(OrePrefix.circuit, circuitTiers[i], 2)
+                    .circuitMeta(1)
                     .outputs(FLUID_REGULATORS[i].getStackForm())
                     .EUt((int) (GTValues.V[i + 1] * 30 / 32))
                     .duration(100)
