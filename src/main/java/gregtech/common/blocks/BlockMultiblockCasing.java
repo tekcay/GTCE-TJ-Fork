@@ -28,11 +28,11 @@ public class BlockMultiblockCasing extends VariantBlock<BlockMultiblockCasing.Mu
     public enum MultiblockCasingType implements IStringSerializable {
 
         ENGINE_INTAKE_CASING("engine_intake"),
-        EXTREME_ENGINE_INTAKE_CASING("extreme_engine_intake"),
         GRATE_CASING("grate"),
         ASSEMBLER_CASING("assembler"),
         FUSION_CASING("fusion"),
-        FUSION_CASING_MK2("fusion_mk2");
+        FUSION_CASING_MK2("fusion_mk2"),
+        EXTREME_ENGINE_INTAKE_CASING("extreme_engine_intake"),;
 
         private final String name;
 
