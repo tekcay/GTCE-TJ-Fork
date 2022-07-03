@@ -42,7 +42,7 @@ public class DieselEngineWorkableHandler extends FuelRecipeLogic {
         FluidStack oxygenStack = Materials.Oxygen.getFluid(2);
         FluidStack drainOxygenStack = fluidTank.get().drain(oxygenStack, false);
         this.isUsingOxygen = drainOxygenStack != null && drainOxygenStack.amount >= 2;
-        return super.calculateFuelAmount(currentRecipe) * (isUsingOxygen ? 2 : 1);
+        return super.calculateFuelAmount(currentRecipe) * (isUsingOxygen ? 16 : 4);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class DieselEngineWorkableHandler extends FuelRecipeLogic {
             FluidStack oxygenStack = Materials.Oxygen.getFluid(2);
             fluidTank.get().drain(oxygenStack, true);
         }
-        return maxVoltage * (isUsingOxygen ? 3 : 1);
+        return maxVoltage * (isUsingOxygen ? 16 : 4);
     }
 
     @Override

@@ -58,8 +58,13 @@ import static gregtech.api.GTValues.M;
 import static gregtech.api.recipes.RecipeMaps.ASSEMBLER_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
-import static gregtech.api.unification.ore.OrePrefix.plate;
 import static gregtech.api.util.DyeUtil.getOrdictColorName;
+import static gregtech.common.blocks.BlockMetalCasing.MetalCasingType.TITANIUM_STABLE;
+import static gregtech.common.blocks.BlockMetalCasing.MetalCasingType.TUNGSTENSTEEL_ROBUST;
+import static gregtech.common.blocks.BlockMultiblockCasing.MultiblockCasingType.ENGINE_INTAKE_CASING;
+import static gregtech.common.blocks.BlockMultiblockCasing.MultiblockCasingType.EXTREME_ENGINE_INTAKE_CASING;
+import static gregtech.common.blocks.MetaBlocks.METAL_CASING;
+
 import static gregtech.common.items.MetaItems.*;
 
 public class MachineRecipeLoader {
@@ -635,6 +640,20 @@ public class MachineRecipeLoader {
                     .outputs(COVER_ITEM_DETECTOR.getStackForm())
                     .EUt(16).duration(400)
                     .buildAndRegister();
+
+            ASSEMBLER_RECIPES.recipeBuilder()
+                    .input(rotor, Titanium, 2)
+                    .input(pipeMedium, Titanium, 4)
+                    .inputs(METAL_CASING.getItemVariant(TITANIUM_STABLE))
+                    .outputs(MetaBlocks.MUTLIBLOCK_CASING.getItemVariant(MultiblockCasingType.ENGINE_INTAKE_CASING,2))
+                    .duration(50).EUt(16).buildAndRegister();
+
+            ASSEMBLER_RECIPES.recipeBuilder()
+                    .input(rotor, TungstenSteel, 2)
+                    .input(pipeMedium, TungstenSteel, 4)
+                    .inputs(METAL_CASING.getItemVariant(TUNGSTENSTEEL_ROBUST))
+                    .outputs(MetaBlocks.MUTLIBLOCK_CASING.getItemVariant(EXTREME_ENGINE_INTAKE_CASING, 2))
+                    .duration(50).EUt(16).buildAndRegister();
         }
 
 

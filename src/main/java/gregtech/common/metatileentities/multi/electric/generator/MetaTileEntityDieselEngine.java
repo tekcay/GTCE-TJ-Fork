@@ -36,7 +36,7 @@ public class MetaTileEntityDieselEngine extends FueledMultiblockController {
 
     @Override
     protected FuelRecipeLogic createWorkable(long maxVoltage) {
-        return new DieselEngineWorkableHandler(this, recipeMap, () -> energyContainer, () -> importFluidHandler, maxVoltage);
+        return new DieselEngineWorkableHandler(this, recipeMap, () -> energyContainer, () -> importFluidHandler, GTValues.V[GTValues.EV]);
     }
 
     @Override

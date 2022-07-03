@@ -339,15 +339,15 @@ metaitem.conveyor.module.mv.tooltip=32 Items every second (as Cover)
 metaitem.conveyor.module.hv.name=Conveyor Module (HV)
 metaitem.conveyor.module.hv.tooltip=64 Items every second (as Cover)
 metaitem.conveyor.module.ev.name=Conveyor Module (EV)
-metaitem.conveyor.module.ev.tooltip=3 Stacks every second (as Cover)
+metaitem.conveyor.module.ev.tooltip=4 Stacks every second (as Cover)
 metaitem.conveyor.module.iv.name=Conveyor Module (IV)
-metaitem.conveyor.module.iv.tooltip=8 Stacks every second (as Cover)
+metaitem.conveyor.module.iv.tooltip=6 Stacks every second (as Cover)
 metaitem.conveyor.module.luv.name=Conveyor Module (LuV)
-metaitem.conveyor.module.luv.tooltip=16 Stacks every second (as Cover)
+metaitem.conveyor.module.luv.tooltip=8 Stacks every second (as Cover)
 metaitem.conveyor.module.zpm.name=Conveyor Module (ZPM)
-metaitem.conveyor.module.zpm.tooltip=16 Stacks every second (as Cover)
+metaitem.conveyor.module.zpm.tooltip=10 Stacks every second (as Cover)
 metaitem.conveyor.module.uv.name=Conveyor Module (UV)
-metaitem.conveyor.module.uv.tooltip=16 Stacks every second (as Cover)
+metaitem.conveyor.module.uv.tooltip=12 Stacks every second (as Cover)
 
 metaitem.electric.piston.lv.name=Electric Piston (LV)
 metaitem.electric.piston.mv.name=Electric Piston (MV)
@@ -1791,6 +1791,7 @@ tile.turbine_casing.tungstensteel_turbine_casing.name=Tungstensteel Turbine Casi
 
 # Multiblock casing blocks
 tile.multiblock_casing.engine_intake.name=Engine Intake Casing
+tile.multiblock_casing.extreme_engine_intake.name=Extreme Engine Intake Casing
 tile.multiblock_casing.grate.name=Grate Machine Casing
 tile.multiblock_casing.assembler.name=Assembler Machine Casing
 tile.multiblock_casing.fusion.name=Fusion Machine Casing
@@ -2801,27 +2802,27 @@ behaviour.paintspray.uses=Remaining Uses: %,d
 behaviour.prospecting=Usable for Prospecting
 
 # Multiblock machine controllers
-gregtech.machine.primitive_blast_furnace.bronze.name=Primitive Blast Furnace(PBF)
-gregtech.machine.electric_blast_furnace.name=Electric Blast Furnace(EBF)
-gregtech.machine.vacuum_freezer.name=Vacuum Freezer(VF)
-gregtech.machine.implosion_compressor.name=Implosion Compressor(IC)
-gregtech.machine.pyrolyse_oven.name=Pyrolyse Oven(PO)
-gregtech.machine.distillation_tower.name=Distillation Tower(DT)
-gregtech.machine.multi_furnace.name=Multi Smelter(MS)
-gregtech.machine.cracker.name=Cracker Unit(CU)
-gregtech.machine.coke_oven.name=Coke Oven(CO)
-gregtech.machine.coke_oven_hatch.name=Coke Oven Hatch(COH)
+gregtech.machine.primitive_blast_furnace.bronze.name=Primitive Blast Furnace (PBF)
+gregtech.machine.electric_blast_furnace.name=Electric Blast Furnace (EBF)
+gregtech.machine.vacuum_freezer.name=Vacuum Freezer (VF)
+gregtech.machine.implosion_compressor.name=Implosion Compressor (IC)
+gregtech.machine.pyrolyse_oven.name=Pyrolyse Oven (PO)
+gregtech.machine.distillation_tower.name=Distillation Tower (DT)
+gregtech.machine.multi_furnace.name=Multi Smelter (MS)
+gregtech.machine.cracker.name=Cracker Unit (CU)
+gregtech.machine.coke_oven.name=Coke Oven (CO)
+gregtech.machine.coke_oven_hatch.name=Coke Oven Hatch (COH)
 gregtech.machine.coke_oven_hatch.tooltip=Allows automation access to coke oven. Must be centered on coke oven side.
 
-gregtech.machine.diesel_engine.name=Diesel Engine(DE)
-gregtech.machine.large_turbine.steam.name=Large Steam Turbine(LST)
-gregtech.machine.large_turbine.gas.name=Large Gas Turbine(LGT)
-gregtech.machine.large_turbine.plasma.name=Large Plasma Turbine(LPT)
+gregtech.machine.diesel_engine.name=Diesel Engine (DE)
+gregtech.machine.large_turbine.steam.name=Large Steam Turbine (LST)
+gregtech.machine.large_turbine.gas.name=Large Gas Turbine (LGT)
+gregtech.machine.large_turbine.plasma.name=Large Plasma Turbine (LPT)
 
-gregtech.machine.large_boiler.bronze.name=Large Bronze Boiler(LBB)
-gregtech.machine.large_boiler.steel.name=Large Steel Boiler(LSB)
-gregtech.machine.large_boiler.titanium.name=Large Titanium Boiler(LTB)
-gregtech.machine.large_boiler.tungstensteel.name=Large Tungstensteel Boiler(LTB)
+gregtech.machine.large_boiler.bronze.name=Large Bronze Boiler (LBB)
+gregtech.machine.large_boiler.steel.name=Large Steel Boiler (LSB)
+gregtech.machine.large_boiler.titanium.name=Large Titanium Boiler (LTB)
+gregtech.machine.large_boiler.tungstensteel.name=Large Tungstensteel Boiler (LTB)
 
 # Multiblock Tooltips
 gregtech.machine.primitive_blast_furnace.bronze.tooltip=Structure: 3x3x4 (WxLxH) The entire structure is made out of Primitive Bricks (32 in total)./nFirst Layer is a 3x3 square./nSecond, third, and fourth layers are hollow, without the middle block./nThis block goes on the middle of any side in the second layer./nThe sides of Blast Furnaces can be shared, if the side does not have a controller./n
