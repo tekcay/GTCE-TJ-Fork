@@ -83,7 +83,7 @@ public class ReactorRecipes {
             .input(dust, SodiumSulfide, 3)
             .fluidInputs(Dichlorobenzene.getFluid(1000))
             .fluidInputs(Oxygen.getFluid(8000))
-            .output(dust, Salt, 2)
+            .output(dust, Salt, 4)
             .fluidOutputs(PolyphenyleneSulfide.getFluid(1500))
             .duration(240).EUt(360).buildAndRegister();
 
