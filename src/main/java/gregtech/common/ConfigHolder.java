@@ -131,9 +131,9 @@ public class ConfigHolder {
     public static boolean enableHammeringEnchant = false;
 
     @Config.Comment("What is the max amount of time machines should sleep if they fail a start a recipe in ticks. 20 ticks = 1 second")
-    @Config.RangeInt(min = 40, max = 400)
+    @Config.RangeInt(min = 0, max = 400)
     @Config.RequiresMcRestart
-    public static int maxSleepTime = 80;
+    public static int maxSleepTime = 0;
 
     public static class VanillaRecipes {
 

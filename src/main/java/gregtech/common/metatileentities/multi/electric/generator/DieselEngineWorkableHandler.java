@@ -56,7 +56,7 @@ public class DieselEngineWorkableHandler extends FuelRecipeLogic {
             FluidStack oxygenStack = Materials.Oxygen.getFluid(2);
             fluidTank.get().drain(oxygenStack, true);
         }
-        return maxVoltage * (isUsingOxygen ? 16 : 4);
+        return maxVoltage * (isUsingOxygen ? 12 : 4);
     }
 
     @Override
