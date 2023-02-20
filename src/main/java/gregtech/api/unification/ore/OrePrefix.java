@@ -180,7 +180,7 @@ public enum OrePrefix {
         gemFlawless.maxStackSize = 32;
         gemExquisite.maxStackSize = 16;
 
-        plateDense.maxStackSize = 8;
+        plateDense.maxStackSize = 7;
         rotor.maxStackSize = 64;
         gear.maxStackSize = 16;
 
@@ -273,8 +273,8 @@ public enum OrePrefix {
         oreBlackgranite.addSecondaryMaterial(new MaterialStack(Materials.GraniteBlack, dust.materialAmount));
         oreBasalt.addSecondaryMaterial(new MaterialStack(Materials.Basalt, dust.materialAmount));
         oreMarble.addSecondaryMaterial(new MaterialStack(Materials.Marble, dust.materialAmount));
-        oreSand.addSecondaryMaterial(new MaterialStack(Materials.SiliconDioxide, dustTiny.materialAmount));
-        oreGravel.addSecondaryMaterial(new MaterialStack(Materials.Flint, dustTiny.materialAmount));
+        oreSand.addSecondaryMaterial(new MaterialStack(Materials.SiliconDioxide, dust.materialAmount));
+        oreGravel.addSecondaryMaterial(new MaterialStack(Materials.Flint, dust.materialAmount));
         oreNetherrack.addSecondaryMaterial(new MaterialStack(Materials.Netherrack, dust.materialAmount));
         oreEndstone.addSecondaryMaterial(new MaterialStack(Materials.Endstone, dust.materialAmount));
 
