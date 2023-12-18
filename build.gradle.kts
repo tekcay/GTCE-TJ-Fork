@@ -53,12 +53,20 @@ val shortVersion = mcVersion.substring(0, mcVersion.lastIndexOf("."))
 val strippedVersion = shortVersion.replace(".", "") + "0"
 
 val forestryVersion = config["forestry.version"] as String
-val chickenasmVersion = config["chickenasm.version"] as String
+val forestryId = config["forestry.id"] as String
+
+val topVersion = config["top.version"] as String
+val topId = config["top.id"] as String
+
+val ctmVersion = config["ctm.version"] as String
+val ctmId = config["ctm.id"] as String
+
 val cclVersion = config["ccl.version"] as String
+val cclId = config["ccl.id"] as String
+
+val chickenasmVersion = config["chickenasm.version"] as String
 val crafttweakerVersion = config["crafttweaker.version"] as String
 val jeiVersion = config["jei.version"] as String
-val topVersion = config["top.version"] as String
-val ctmVersion = config["ctm.version"] as String
 
 val git: Git = Git.open(projectDir)
 
@@ -81,50 +89,28 @@ minecraft {
 }
 
 repositories {
-    maven {
-        name = "ic2, forestry"
-        setUrl("http://maven.ic2.player.to/")
+    maven { // JEI
+        name = "Progwml6 Maven"
+        setUrl("https://dvs1.progwml6.com/files/maven/")
     }
-    maven { //JEI
-        name = "Progwml6 maven"
-        setUrl("http://dvs1.progwml6.com/files/maven/")
-    }
-    maven { //JEI fallback
-        name = "ModMaven"
-        setUrl("modmaven.k-4u.nl")
+    maven { // CraftTweaker and JEI Backup
+        name = "BlameJared Maven"
+        setUrl("https://maven.blamejared.com")
     }
     maven {
-        name = "tterrag maven"
-        setUrl("http://maven.tterrag.com/")
-    }
-    maven {
-        name = "ChickenBones maven"
-        setUrl("http://chickenbones.net/maven/")
-    }
-    maven {
-        name = "CoFH Maven"
-        setUrl("http://maven.covers1624.net")
-    }
-    maven {
-        name = "CraftTweaker Maven"
-        setUrl("https://maven.blamejared.com/")
-    }
-    maven {
-        name = "CCL Maven New"
-        setUrl("https://minecraft.curseforge.com/api/maven")
+        setUrl("https://cursemaven.com")
     }
 }
 
 dependencies {
-    "deobfCompile"("net.sengir.forestry:forestry_$mcVersion:$forestryVersion") {
-        isTransitive = false
-    }
-    "deobfCompile"("codechicken:ChickenASM:$shortVersion-$chickenasmVersion")
-    "deobfCompile"("codechicken-lib-1-8:CodeChickenLib-$mcVersion:$cclVersion:universal")
+
+    "deobfCompile"("curse.maven:codechicken-lib-1-8-$cclId:$cclVersion-universal")
+    "deobfCompile"("curse.maven:the-one-probe-$topId:$topVersion")
+    "deobfCompile"("curse.maven:forestry-$forestryId:$forestryVersion")
+    "deobfCompile"("curse.maven:ctm-$ctmId:$ctmVersion")
+
     "deobfCompile"("CraftTweaker2:CraftTweaker2-MC$strippedVersion-Main:$crafttweakerVersion")
     "deobfCompile"("mezz.jei:jei_$mcVersion:$jeiVersion")
-    "deobfCompile"("mcjty.theoneprobe:TheOneProbe-$shortVersion:$shortVersion-$topVersion")
-    "deobfCompile"("team.chisel.ctm:CTM:MC$mcVersion-$ctmVersion")
 
     "testImplementation"("junit:junit:4.13.1")
 }
