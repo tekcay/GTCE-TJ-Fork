@@ -1,5 +1,6 @@
 package gregtech.integration.jei.recipe;
 
+import gregtech.api.fluids.NotConsumedRecipeFluidInput;
 import gregtech.api.recipes.CountableIngredient;
 import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.Recipe.ChanceEntry;
@@ -19,6 +20,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -30,8 +32,7 @@ public class GTRecipeWrapper implements IRecipeWrapper {
     private final Map<ItemStack, ChanceEntry> chanceOutput = new Object2ObjectOpenCustomHashMap<>(strategy);
     private final List<FluidStack> notConsumedFluidInput = new ArrayList<>();
     private final List<Integer> notConsumedInputSlotIndex = new ArrayList<>();
-
-
+    private final List<Integer> notConsumedInputTankIndex = new ArrayList<>();
     private final Recipe recipe;
 
     public GTRecipeWrapper(Recipe recipe) {
@@ -47,13 +48,12 @@ public class GTRecipeWrapper implements IRecipeWrapper {
     }
 
     @Override
-    public void getIngredients(IIngredients ingredients) {
-
-        int slotIndex = 0;
+    public void getIngredients(@Nonnull IIngredients ingredients) {
 
         if (!recipe.getInputs().isEmpty()) {
             List<CountableIngredient> recipeInputs = recipe.getInputs();
             List<List<ItemStack>> matchingInputs = new ArrayList<>(recipeInputs.size());
+            int slotIndex = 0;
 
             for (CountableIngredient ingredient : recipeInputs) {
                 List<ItemStack> ingredientValues = Arrays.stream(ingredient.getIngredient().getMatchingStacks())
@@ -78,12 +78,13 @@ public class GTRecipeWrapper implements IRecipeWrapper {
             List<FluidStack> recipeInputs = recipe.getFluidInputs()
                     .stream().map(FluidStack::copy)
                     .collect(Collectors.toList());
-            recipeInputs.forEach(stack -> {
-                if (stack.amount == 0) {
-                    notConsumedFluidInput.add(stack);
-                    stack.amount = 1;
+            int slot = 0;
+            for (FluidStack fluidStack : recipeInputs) {
+                if (fluidStack instanceof NotConsumedRecipeFluidInput) {
+                    notConsumedFluidInput.add(fluidStack);
+                    notConsumedInputTankIndex.add(slot);
                 }
-            });
+            }
             ingredients.setInputs(VanillaTypes.FLUID, recipeInputs);
         }
 
@@ -159,6 +160,10 @@ public class GTRecipeWrapper implements IRecipeWrapper {
 
     public boolean isNotConsumedItem(int slot) {
         return slot <= this.recipe.getInputs().size() && this.notConsumedInputSlotIndex.contains(slot);
+    }
+
+    public boolean isNotConsumedFluid(int slot) {
+        return slot <= this.recipe.getFluidInputs().size() && this.notConsumedInputTankIndex.contains(slot);
     }
 
 }
