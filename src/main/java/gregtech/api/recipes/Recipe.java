@@ -2,6 +2,7 @@ package gregtech.api.recipes;
 
 import com.google.common.collect.ImmutableList;
 import gregtech.api.capability.IMultipleTankHandler;
+import gregtech.api.fluids.NotConsumedRecipeFluidInput;
 import gregtech.api.recipes.recipeproperties.RecipeProperty;
 import gregtech.api.recipes.recipeproperties.RecipePropertyStorage;
 import gregtech.api.util.GTUtility;
@@ -203,12 +204,9 @@ public class Recipe {
         }
 
         for (FluidStack fluid : this.fluidInputs) {
-            int fluidAmount = fluid.amount;
-            boolean isNotConsumed = false;
-            if (fluidAmount == 0) {
-                fluidAmount = 1;
-                isNotConsumed = true;
-            }
+            boolean isNotConsumed = fluid instanceof NotConsumedRecipeFluidInput;
+            int fluidAmount = isNotConsumed ? 0 : fluid.amount;
+
             for (int i = 0; i < fluidInputs.size(); i++) {
                 FluidStack tankFluid = fluidInputs.get(i);
                 if (tankFluid == null || !tankFluid.isFluidEqual(fluid))
@@ -278,9 +276,8 @@ public class Recipe {
         }
         return false;
     }
-
     public List<FluidStack> getFluidOutputs() {
-        return fluidOutputs;
+        return this.fluidOutputs;
     }
 
     public int getDuration() {

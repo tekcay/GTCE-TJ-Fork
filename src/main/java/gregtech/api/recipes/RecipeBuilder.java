@@ -1,9 +1,10 @@
 package gregtech.api.recipes;
 
+import gregtech.api.fluids.NotConsumedRecipeFluidInput;
 import gregtech.api.items.metaitem.MetaItem;
 import gregtech.api.recipes.Recipe.ChanceEntry;
-import gregtech.api.unification.material.type.FluidMaterial;
 import gregtech.api.unification.OreDictUnifier;
+import gregtech.api.unification.material.type.FluidMaterial;
 import gregtech.api.unification.material.type.Material;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.util.EnumValidationResult;
@@ -184,11 +185,11 @@ public abstract class RecipeBuilder<R extends RecipeBuilder<R>> {
     }
 
     public R notConsumable(FluidMaterial fluidMat) {
-        return fluidInputs(new FluidStack(fluidMat.getFluid(1), 0));
+        return fluidInputs(new NotConsumedRecipeFluidInput(fluidMat, true));
     }
 
     public R notConsumable(FluidStack fluidStack) {
-        return fluidInputs(new FluidStack(fluidStack, 0));
+        return fluidInputs(new NotConsumedRecipeFluidInput(fluidStack, true));
     }
 
     public R output(OrePrefix orePrefix, Material material) {
