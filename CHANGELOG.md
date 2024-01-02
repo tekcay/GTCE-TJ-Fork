@@ -1,5 +1,13 @@
 ## Changelog
 
+### 1.17.12
+* Backport the `NC` watermark for notConsumed item and fluid stacks - tekcay
+
+### 1.17.11
+* fixed build gradle - tekcay
+
+[...]
+
 ### 1.17.5
 * Port hamering enchant from Tools PR in CEu - BraggestSage833
 * Backport memory leak fix - BraggestSage833
